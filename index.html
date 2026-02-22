@@ -69,7 +69,6 @@ ul {
     margin: 30px 0;
 }
 
-/* Price box — fixed: removed min-width: 550px that broke mobile */
 .price-box {
     background: #8c5a2b;
     color: white;
@@ -98,7 +97,6 @@ ul {
     font-size: 2rem;
 }
 
-/* Buttons — fixed: flexbox instead of text-align so they wrap cleanly */
 .buttons {
     display: flex;
     flex-wrap: wrap;
@@ -164,6 +162,7 @@ footer a {
     -ms-overflow-style: none;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -184,15 +183,15 @@ footer a {
     flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s;
-    cursor: grab;
     scroll-snap-align: start;
+    cursor: grab;
 }
 
 .carousel-track img:hover {
     transform: scale(1.04);
 }
 
-/* About — fixed: replaced float with flexbox */
+/* About section */
 .about-container {
     display: flex;
     flex-wrap: wrap;
@@ -243,7 +242,6 @@ footer a {
         width: 160px;
     }
 
-    /* Stack about image above text on small screens */
     .about-container {
         flex-direction: column;
         align-items: center;
@@ -255,7 +253,6 @@ footer a {
         max-width: 240px;
     }
 
-    /* Stack buttons vertically */
     .buttons {
         flex-direction: column;
         align-items: center;
@@ -273,9 +270,7 @@ footer a {
 
 <header>
     <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
-    <p>
-        בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!
-    </p>
+    <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
 </header>
 
 <!-- Carousel -->
@@ -284,7 +279,6 @@ footer a {
         <img src="thumbnail.jpg" alt="לחם מחמצת 1">
         <img src="image2.jpg" alt="לחם מחמצת 2">
         <img src="image3.jpg" alt="לחם מחמצת 3">
-        <!-- Add more images if needed -->
     </div>
 </div>
 
@@ -400,38 +394,43 @@ footer a {
 </footer>
 
 <script>
-const track = document.querySelector('.carousel-track');
+// Mobile-friendly swipe & desktop drag carousel
 const container = document.querySelector('.carousel-container');
+
 let isDown = false;
 let startX;
 let scrollLeft;
 
 // Mouse drag (desktop)
-track.addEventListener('mousedown', (e) => {
+container.addEventListener('mousedown', (e) => {
     isDown = true;
-    startX = e.pageX - track.offsetLeft;
+    container.classList.add('active');
+    startX = e.pageX - container.offsetLeft;
     scrollLeft = container.scrollLeft;
 });
-track.addEventListener('mouseleave', () => isDown = false);
-track.addEventListener('mouseup', () => isDown = false);
-track.addEventListener('mousemove', (e) => {
+container.addEventListener('mouseleave', () => isDown = false);
+container.addEventListener('mouseup', () => isDown = false);
+container.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
+    const x = e.pageX - container.offsetLeft;
     const walk = (x - startX) * 2;
     container.scrollLeft = scrollLeft - walk;
 });
 
 // Touch swipe (mobile)
-track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].pageX;
-    scrollLeft = container.scrollLeft;
+let touchStartX = 0;
+let touchScrollLeft = 0;
+
+container.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = container.scrollLeft;
 }, { passive: true });
 
-track.addEventListener('touchmove', (e) => {
+container.addEventListener('touchmove', (e) => {
     const x = e.touches[0].pageX;
-    const walk = (x - startX) * 1.5;
-    container.scrollLeft = scrollLeft - walk;
+    const walk = (x - touchStartX) * 1.5;
+    container.scrollLeft = touchScrollLeft - walk;
 }, { passive: true });
 </script>
 
