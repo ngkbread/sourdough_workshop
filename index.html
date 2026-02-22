@@ -163,6 +163,7 @@ footer a {
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x; /* allow horizontal swipe on mobile */
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -197,6 +198,7 @@ footer a {
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 20px;
+    margin-bottom: 0; /* only affects mobile below */
 }
 
 .about-img {
@@ -214,6 +216,7 @@ footer a {
 
 /* ── Mobile ── */
 @media (max-width: 600px) {
+
     header {
         padding: 40px 16px;
     }
@@ -228,6 +231,7 @@ footer a {
 
     section {
         padding: 28px 16px;
+        padding-bottom: 20px; /* reduce extra gap on mobile only */
     }
 
     .highlight-box {
@@ -242,10 +246,12 @@ footer a {
         width: 160px;
     }
 
+    /* Stack about image above text and remove extra gap */
     .about-container {
         flex-direction: column;
         align-items: center;
         text-align: right;
+        margin-bottom: 0;
     }
 
     .about-img {
@@ -253,6 +259,7 @@ footer a {
         max-width: 240px;
     }
 
+    /* Stack buttons vertically */
     .buttons {
         flex-direction: column;
         align-items: center;
@@ -394,15 +401,14 @@ footer a {
 </footer>
 
 <script>
-// Mobile-friendly swipe & desktop drag carousel
+// Desktop drag & mobile swipe carousel
 const container = document.querySelector('.carousel-container');
 
+// Desktop drag
 let isDown = false;
-let startX;
-let scrollLeft;
+let startX, scrollLeft;
 
-// Mouse drag (desktop)
-container.addEventListener('mousedown', (e) => {
+container.addEventListener('mousedown', e => {
     isDown = true;
     container.classList.add('active');
     startX = e.pageX - container.offsetLeft;
@@ -410,28 +416,34 @@ container.addEventListener('mousedown', (e) => {
 });
 container.addEventListener('mouseleave', () => isDown = false);
 container.addEventListener('mouseup', () => isDown = false);
-container.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
+container.addEventListener('mousemove', e => {
+    if(!isDown) return;
     e.preventDefault();
     const x = e.pageX - container.offsetLeft;
     const walk = (x - startX) * 2;
     container.scrollLeft = scrollLeft - walk;
 });
 
-// Touch swipe (mobile)
+// Mobile swipe
 let touchStartX = 0;
 let touchScrollLeft = 0;
+let isTouching = false;
 
-container.addEventListener('touchstart', (e) => {
+container.addEventListener('touchstart', e => {
+    isTouching = true;
     touchStartX = e.touches[0].pageX;
     touchScrollLeft = container.scrollLeft;
 }, { passive: true });
 
-container.addEventListener('touchmove', (e) => {
+container.addEventListener('touchmove', e => {
+    if(!isTouching) return;
     const x = e.touches[0].pageX;
     const walk = (x - touchStartX) * 1.5;
     container.scrollLeft = touchScrollLeft - walk;
 }, { passive: true });
+
+container.addEventListener('touchend', () => isTouching = false);
+container.addEventListener('touchcancel', () => isTouching = false);
 </script>
 
 </body>
