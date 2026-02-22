@@ -61,7 +61,6 @@ ul {
     margin: 30px 0;
 }
 
-
 .price-box {
     background: #8c5a2b;
     color: white;
@@ -74,13 +73,6 @@ ul {
     margin-left: auto;
 }
 
-
-/* Right-align buttons under the box */
-.buttons {
-    text-align: right;
-    margin-top: 20px;
-}
-
 .price-box li {
     margin-bottom: 25px;
 }
@@ -90,6 +82,7 @@ ul {
     font-size: 2rem;
 }
 
+/* Buttons */
 .buttons {
     text-align: center;
     margin-top: 30px;
@@ -138,6 +131,7 @@ footer a {
     margin: 0 8px;
 }
 
+/* Carousel */
 .carousel-container {
     max-width: 900px;
     margin: 40px auto;
@@ -146,8 +140,6 @@ footer a {
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
-
-    /* ADDED */
     scroll-snap-type: x mandatory;
 }
 
@@ -159,8 +151,6 @@ footer a {
     display: flex;
     gap: 15px;
     padding: 10px 20px;
-
-    /* ADDED FIX FOR RTL */
     direction: ltr;
 }
 
@@ -172,8 +162,6 @@ footer a {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s;
     cursor: grab;
-
-    /* ADDED */
     scroll-snap-align: start;
 }
 
@@ -181,7 +169,7 @@ footer a {
     transform: scale(1.04);
 }
 
-/* About Me section with wrapped image */
+/* About Me */
 .about-container {
     display: flex;
     flex-wrap: wrap;
@@ -197,23 +185,61 @@ footer a {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-@media(max-width: 600px) {
+/* Responsive fixes */
+@media(max-width: 768px) {
+    .price-box {
+        min-width: auto;
+        width: 90%;
+        margin: 20px auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .price-box ul {
+        padding-right: 0;
+        padding-left: 0;
+        list-style-position: inside;
+    }
+
+    .buttons {
+        text-align: center;
+    }
+
+    .btn {
+        width: 80%;
+        max-width: 300px;
+        margin: 10px auto;
+    }
+
+    section {
+        padding: 20px 15px;
+    }
+
+    header {
+        padding: 40px 15px;
+    }
+
     header h1 {
         font-size: 1.8rem;
     }
+
+    header p {
+        font-size: 1rem;
+    }
+
     .carousel-track img {
-        width: 120px;
-        margin: 0 3px;
+        width: 180px;
     }
-    .about-container {
-        flex-direction: column;
+}
+
+@media(max-width: 480px) {
+    .carousel-track img {
+        width: 140px;
     }
+
     .about-img {
         width: 100%;
-        max-width: 300px;
-        float: none;
-        margin: 0 auto 15px;
-        display: block;
+        max-width: 250px;
     }
 }
 </style>
@@ -222,7 +248,7 @@ footer a {
 <body>
 
 <header>
-    <h1>סדנת אפיית לחמי מחמצת באהבה</h1>
+    <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
     <p>
         בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!
     </p>
@@ -234,15 +260,9 @@ footer a {
         <img src="thumbnail.jpg" alt="לחם מחמצת 1">
         <img src="image2.jpg" alt="לחם מחמצת 2">
         <img src="image3.jpg" alt="לחם מחמצת 3">
-
-        <!-- YOU CAN ADD MORE IMAGES HERE -->
-        <!-- Example:
-        <img src="image4.jpg" alt="לחם מחמצת 4">
-        <img src="image5.jpg" alt="לחם מחמצת 5">
-        -->
+        <!-- Add more images if needed -->
     </div>
 </div>
-
 
 <section>
     <h2>אז מה בסדנה?</h2>
@@ -311,10 +331,8 @@ footer a {
     </div>
 </section>
 
-
 <section>
     <h2 style="text-align: right;">פרטים חשובים</h2>
-
     <div class="price-wrapper">
         <div class="price-box">
             <ul>
@@ -325,11 +343,9 @@ footer a {
         </div>
     </div>
 
-
-        <div class="buttons">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScLdslxf1nx_1KfuOWfw_dHLsAbzHLjGUeTYLgGHFsgCCsXNA/viewform?usp=sf_link" class="btn btn-primary">למידע נוסף / הרשמה</a>
-            <a href="https://wa.me/972544635149" class="btn btn-outline">צור קשר</a>
-        </div>
+    <div class="buttons">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScLdslxf1nx_1KfuOWfw_dHLsAbzHLjGUeTYLgGHFsgCCsXNA/viewform?usp=sf_link" class="btn btn-primary">למידע נוסף / הרשמה</a>
+        <a href="https://wa.me/972544635149" class="btn btn-outline">צור קשר</a>
     </div>
 </section>
 
@@ -358,7 +374,6 @@ footer a {
             </svg>
             LinkedIn
         </a>
-
     </div>
 </footer>
 
@@ -370,5 +385,3 @@ let currentIndex = 0;
 
 </body>
 </html>
-
-
