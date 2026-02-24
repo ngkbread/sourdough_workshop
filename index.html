@@ -185,7 +185,6 @@ footer a {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s;
     scroll-snap-align: start;
-    cursor: grab;
 }
 
 .carousel-track img:hover {
@@ -356,7 +355,7 @@ footer a {
     </div>
 </section>
 
-<section style="padding-top: 10px;">
+<section>
     <h2 style="text-align: right;">פרטים חשובים</h2>
     <div class="price-box">
         <ul>
@@ -399,52 +398,6 @@ footer a {
         </a>
     </div>
 </footer>
-
-<script>
-// Desktop drag & mobile swipe carousel
-const container = document.querySelector('.carousel-container');
-
-// Desktop drag
-let isDown = false;
-let startX, scrollLeft;
-
-container.addEventListener('mousedown', e => {
-    isDown = true;
-    container.classList.add('active');
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-});
-container.addEventListener('mouseleave', () => isDown = false);
-container.addEventListener('mouseup', () => isDown = false);
-container.addEventListener('mousemove', e => {
-    if(!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 2;
-    container.scrollLeft = scrollLeft - walk;
-});
-
-// Mobile swipe
-let touchStartX = 0;
-let touchScrollLeft = 0;
-let isTouching = false;
-
-container.addEventListener('touchstart', e => {
-    isTouching = true;
-    touchStartX = e.touches[0].pageX;
-    touchScrollLeft = container.scrollLeft;
-}, { passive: true });
-
-container.addEventListener('touchmove', e => {
-    if(!isTouching) return;
-    const x = e.touches[0].pageX;
-    const walk = (x - touchStartX) * 1.5;
-    container.scrollLeft = touchScrollLeft - walk;
-}, { passive: true });
-
-container.addEventListener('touchend', () => isTouching = false);
-container.addEventListener('touchcancel', () => isTouching = false);
-</script>
 
 </body>
 </html>
