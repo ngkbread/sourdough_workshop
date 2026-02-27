@@ -177,8 +177,6 @@ footer a {
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -250,6 +248,7 @@ footer a {
 
     .highlight-box {
         padding: 18px 16px;
+        margin: 18px 0; /* reduce margin on mobile */
     }
 
     .price-box {
@@ -281,11 +280,16 @@ footer a {
         align-items: center;
         text-align: right;
         margin-bottom: 0;
+        gap: 12px; /* reduce vertical gap */
     }
 
     .about-img {
         width: 100%;
         max-width: 240px;
+    }
+
+    .about-container p {
+        margin-bottom: 0; /* remove default paragraph spacing */
     }
 
     /* Stack buttons vertically */
