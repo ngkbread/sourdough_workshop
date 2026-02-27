@@ -20,7 +20,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
 html {
@@ -153,13 +152,11 @@ footer a {
     width: 100%;
     max-width: 900px;
     margin: 40px auto;
-    overflow-x: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
     padding-bottom: 20px;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    direction: ltr; /* isolate from RTL page */
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -170,7 +167,6 @@ footer a {
     display: flex;
     gap: 15px;
     padding: 10px 20px;
-    direction: ltr;
 }
 
 .carousel-track img {
@@ -179,12 +175,6 @@ footer a {
     border-radius: 8px;
     flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-    scroll-snap-align: start;
-}
-
-.carousel-track img:hover {
-    transform: scale(1.04);
 }
 
 /* ───── About Section ───── */
@@ -249,11 +239,10 @@ footer a {
         padding: 10px 0;
     }
 
-    .carousel-track img {
-        width: 85vw;
-        max-width: 420px;
-        border-radius: 12px;
-    }
+.carousel-track img {
+    width: 75vw;
+    max-width: 340px;
+}
 
     /* Stack about section */
 
@@ -298,11 +287,6 @@ footer a {
         <img src="image3.jpg" alt="לחם מחמצת 3">
     </div>
 </div>
-
-<!-- Rest of your HTML remains EXACTLY the same -->
-
-</body>
-</html>
 
 <section>
     <h2>אז מה בסדנה?</h2>
