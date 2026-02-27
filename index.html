@@ -226,7 +226,7 @@ footer a {
     margin: 0;
 }
 
-/* ── Mobile ── */
+/* Mobile */
 @media (max-width: 600px) {
 
     header {
@@ -246,9 +246,14 @@ footer a {
         padding-bottom: 20px;
     }
 
+    /* ─ Reduce gap after "קצת עליי" ─ */
+    section.about {
+        padding-bottom: 12px;
+    }
+
     .highlight-box {
         padding: 18px 16px;
-        margin: 18px 0; /* reduce margin on mobile */
+        margin: 18px 0;
     }
 
     .price-box {
@@ -280,7 +285,7 @@ footer a {
         align-items: center;
         text-align: right;
         margin-bottom: 0;
-        gap: 12px; /* reduce vertical gap */
+        gap: 8px; /* smaller vertical gap */
     }
 
     .about-img {
@@ -289,7 +294,7 @@ footer a {
     }
 
     .about-container p {
-        margin-bottom: 0; /* remove default paragraph spacing */
+        margin-bottom: 0;
     }
 
     /* Stack buttons vertically */
@@ -378,7 +383,7 @@ footer a {
     </p>
 </section>
 
-<section>
+<section class="about">
     <h2>קצת עליי</h2>
     <div class="about-container">
         <img src="myimage3.jpg" alt="נועם קדישמן" class="about-img">
