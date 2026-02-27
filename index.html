@@ -26,6 +26,11 @@ html {
     height: 100%;
 }
 
+/* ✅ FIX: main grows to fill space, pushing footer down without stretching sections */
+main {
+    flex: 1;
+}
+
 header {
     background: #8c5a2b;
     color: white;
@@ -141,7 +146,6 @@ footer {
     color: white;
     text-align: center;
     padding: 30px 20px;
-    margin-top: auto;
 }
 
 footer a {
@@ -285,7 +289,7 @@ footer a {
         align-items: center;
         text-align: right;
         margin-bottom: 0;
-        gap: 8px; /* smaller vertical gap */
+        gap: 8px;
     }
 
     .about-img {
@@ -317,6 +321,8 @@ footer a {
     <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
     <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
 </header>
+
+<main>
 
 <!-- Carousel -->
 <div class="carousel-container">
@@ -409,6 +415,8 @@ footer a {
         <a href="https://wa.me/972544635149" class="btn btn-outline">צור קשר</a>
     </div>
 </section>
+
+</main>
 
 <footer>
     <p style="margin: 0 0 12px 0;">Noam Kadishman ©</p>
