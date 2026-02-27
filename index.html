@@ -75,9 +75,20 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   .about-container p{margin-bottom:0;flex:0 1 auto}
   .buttons{flex-direction:column;align-items:center}
   .btn{width:100%;max-width:300px}
-  .wheat-img{width:140px}
-  .wheat-img.top-right{top:-40px;right:-30px}
-  .wheat-img.bottom-left{bottom:-40px;left:-30px}
+  .wheat-img{
+  width:160px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.wheat-img.top-right{
+  top:-60px;
+}
+
+.wheat-img.bottom-left{
+  bottom:-60px;
+  transform:translateX(-50%) rotate(180deg);
+}
   .wheat-wreath-wrapper{padding:20px 0}
   .price-section{padding:40px 36px}
 }
