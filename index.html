@@ -150,6 +150,22 @@ footer a {
     margin: 0 8px;
 }
 
+@media (max-width: 600px) {
+    footer div svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    footer div a {
+        font-size: 0.8rem;
+        gap: 4px !important;
+    }
+
+    footer div {
+        gap: 8px !important;
+    }
+}
+
 /* Carousel */
 .carousel-container {
     width: 100%;
@@ -254,8 +270,8 @@ footer a {
     }
 
     .carousel-track img {
-        width: 72%;
-        max-width: 260px;
+        width: 55%;
+        max-width: 200px;
         flex-shrink: 1;
     }
 
@@ -399,9 +415,10 @@ footer a {
 
         <span style="opacity:0.4;">|</span>
 
-        <a href="https://www.facebook.com/profile.php?id=100083151077768" target="_blank" rel="noopener" aria-label="Facebook" style="color:#fff; display:inline-flex; align-items:center; gap:7px; text-decoration:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        <a href="YOUR_FACEBOOK_URL_HERE" target="_blank" rel="noopener" aria-label="Facebook" style="color:#fff; display:inline-flex; align-items:center; gap:7px; text-decoration:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="currentColor"/>
+                <text x="12.5" y="17.5" font-family="Arial, sans-serif" font-size="15" font-weight="900" fill="#2c2c2c" text-anchor="middle" letter-spacing="-1">f</text>
             </svg>
             Facebook
         </a>
