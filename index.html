@@ -163,8 +163,7 @@ footer a {
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x; /* allow horizontal swipe on mobile */
-    cursor: grab;
+    touch-action: pan-x;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -242,10 +241,24 @@ footer a {
         padding: 22px 18px;
     }
 
-    .carousel-track img {
-        width: 160px;
+    /* Vertical carousel on mobile */
+    .carousel-container {
+        overflow-x: visible;
     }
 
+    .carousel-track {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 16px;
+    }
+
+    .carousel-track img {
+        width: 100%;
+        max-width: 100%;
+        flex-shrink: 1;
+    }
+
+    /* Stack about image above text and remove extra gap */
     .about-container {
         flex-direction: column;
         align-items: center;
@@ -258,6 +271,7 @@ footer a {
         max-width: 240px;
     }
 
+    /* Stack buttons vertically */
     .buttons {
         flex-direction: column;
         align-items: center;
@@ -397,59 +411,6 @@ footer a {
         </a>
     </div>
 </footer>
-
-<script>
-// Drag & swipe carousel
-const track = document.querySelector('.carousel-track');
-let isDown = false;
-let startX;
-let scrollLeft;
-
-track.addEventListener('mousedown', (e) => {
-    isDown = true;
-    track.classList.add('active');
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-});
-track.addEventListener('mouseleave', () => isDown = false);
-track.addEventListener('mouseup', () => isDown = false);
-track.addEventListener('mousemove', (e) => {
-    if(!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX);
-    track.scrollLeft = scrollLeft - walk;
-});
-
-// Touch support for mobile
-track.addEventListener('touchstart', e => {
-    isDown = true;
-    startX = e.touches[0].pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-});
-track.addEventListener('touchend', () => isDown = false);
-track.addEventListener('touchmove', e => {
-    if(!isDown) return;
-    const x = e.touches[0].pageX - track.offsetLeft;
-    const walk = (x - startX);
-    track.scrollLeft = scrollLeft - walk;
-});
-
-// Auto-slide every 2 seconds
-let autoSlide = setInterval(() => {
-    const firstImage = track.querySelector('img');
-    const imageWidth = firstImage.offsetWidth + 15; // image + gap
-    track.scrollLeft += imageWidth;
-    if(track.scrollLeft + track.offsetWidth >= track.scrollWidth) {
-        track.scrollTo({ left: 0, behavior: 'smooth' });
-    }
-}, 2000);
-
-// Pause auto-slide on user interaction
-['mousedown','touchstart','mouseenter'].forEach(evt => {
-    track.addEventListener(evt, () => clearInterval(autoSlide));
-});
-</script>
 
 </body>
 </html>
