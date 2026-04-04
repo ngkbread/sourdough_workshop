@@ -102,9 +102,7 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 <header>
      <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
     <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
-    <!-- Hamburger button -->
-  <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
-
+    
     <nav class="navbar">
         <a href="index.html">דף הבית</a>
         <a href="index.html">סדנאות</a>
@@ -224,45 +222,6 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 
 .dropdown.open .dropdown-content {
     display: block;
-}
-
-
-/* Hamburger button */
-.hamburger {
-  display: none;
-  font-size: 1.8rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  position: absolute;
-  top: 16px;
-  left: 20px; /* adjust for RTL if needed */
-  z-index: 1100;
-}
-
-/* Mobile adjustments */
-@media(max-width: 600px) {
-  .hamburger {
-    display: block;
-  }
-
-  .navbar {
-    display: none; /* hide by default */
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    position: absolute;
-    top: 60px; /* below header */
-    left: 0;
-    background: #8c5a2b;
-    padding: 20px;
-    border-radius: 0;
-  }
-
-  .navbar.active {
-    display: flex;
-  }
 }
 </style>
 
