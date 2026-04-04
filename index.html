@@ -258,8 +258,8 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 
   .navbar-links {
     position: fixed;
-    top: 150px; /* below the header text & hamburger */
-    right: -100%;
+    top: 150px; /* below header text & hamburger */
+    right: -100%; /* hidden initially off-screen */
     width: 250px;
     height: calc(100% - 150px);
     background: #8c5a2b;
@@ -269,11 +269,15 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
     border-radius: 12px 0 0 12px;
     transition: right 0.3s ease;
     z-index: 1000;
+
+    /* ✅ hide by default on mobile */
+    display: none;
   }
 
   .navbar-links.show {
-    right: 0;
-  }
+    display: flex; /* show the menu */
+    right: 0;      /* slide in from right */
+}
 
   /* Animate hamburger to X */
   .hamburger.open span:nth-child(1) {
@@ -402,5 +406,7 @@ function toggleMobileMenu() {
   hamburger.classList.toggle("open");
 }
 </script>
+
+
 </body>
 </html>
