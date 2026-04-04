@@ -180,14 +180,22 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 }
 
 /* Hamburger icon */
+
+
+/* Mobile menu below burger */
+@media(max-width:600px){
+/* Hamburger icon - top right */
 .hamburger {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 28px;
   height: 20px;
   cursor: pointer;
-  margin: 15px auto 0 auto;
+  position: fixed; /* top-right */
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
 }
 
 .hamburger span {
@@ -198,60 +206,50 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   transition: all 0.3s ease;
 }
 
-/* Mobile menu below burger */
-@media(max-width:600px){
-  .hamburger { display: flex; }
+/* Navbar sliding menu */
+.navbar-links {
+  position: fixed;
+  top: -100%; /* hidden initially */
+  left: 0;
+  width: 100%;
+  background: #8c5a2b;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 12px;
+  border-radius: 0 0 12px 12px;
+  transition: top 0.3s ease;
+  z-index: 1000;
+}
 
-  .navbar-links {
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    margin-top: 12px;
-  }
+.navbar-links.show {
+  top: 0; /* slide down */
+}
 
-  .navbar-links.show {
-    display: flex;
-  }
+/* Dropdown */
+.dropdown { position: relative; display: inline-block; }
 
-  .navbar-links a, .navbar-links .dropbtn {
-    color: white;
-    width: 100%;
-  }
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  background-color: #8c5a2b;
+  gap: 8px;
+  padding: 10px 0;
+}
 
-  .hamburger.open span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.open span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
+.dropdown.open .dropdown-content {
+  display: flex;
+}
 
-  /* Mobile dropdown inside menu */
-  .navbar-links .dropdown-content {
-    position: relative;
-    right: auto;
-    transform: none;
-    opacity: 1;
-    pointer-events: auto;
-    box-shadow: none;
-    background-color: #8c5a2b;
-  }
-
-  .navbar-links .dropdown-content a {
-    color: white;
-  }
-
-  .navbar-links .dropdown.open .dropdown-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .dropdown .triangle {
-    border-top-color: white;
-  }
+/* Hamburger animation */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 </style>
 
@@ -259,39 +257,37 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 <body>
 
 <header>
-        <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
-        <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
+    <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
+    <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
 
-          <!-- Hamburger appears only on mobile -->
-    <!-- Hamburger appears only on mobile -->
-<div class="hamburger" onclick="toggleMobileMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
+    <!-- Hamburger -->
+    <div class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
-<!-- Wrap all nav links inside navbar-links -->
-<div class="navbar-links">
-  <nav class="navbar">
-      <a href="index.html">דף הבית</a>
-      <a href="#about">אודות</a>
+    <!-- Navbar links -->
+    <div class="navbar-links">
+        <nav class="navbar">
+            <a href="index.html">דף הבית</a>
+            <a href="#about">אודות</a>
 
-      <!-- Dropdown menu for כלי עזר -->
-      <div class="dropdown">
-          <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
-              כלי עזר <span class="triangle"></span>
-          </a>
-          <div class="dropdown-content">
-              <a href="starter_calculator.html">מחשבון מחמצת</a>
-          </div>
-      </div>
-
-      <a href="https://wa.me/972544635149?text=היי%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת%20" target="_blank">
-          צור קשר
-      </a>
-  </nav>
-</div>
-
+            <!-- Dropdown menu for כלי עזר -->
+            <div class="dropdown">
+                <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+                    כלי עזר <span class="triangle"></span>
+                </a>
+                <div class="dropdown-content">
+                    <a href="starter_calculator.html">מחשבון מחמצת</a>
+                </div>
+            </div>
+            <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
+            <a href="https://wa.me/972544635149?text=היי%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת%20" target="_blank">
+                צור קשר
+            </a>
+        </nav>
+    </div>
 </header>
 <style>
     html {
@@ -630,19 +626,17 @@ function toggleDropdown(e, el) {
 </script>
 
 <script>
-window.addEventListener("pageshow", function () {
-    document.querySelectorAll(".dropdown").forEach(drop => {
-        drop.classList.remove("open");
-    });
-});
-</script>
-
-<script>
 function toggleMobileMenu() {
-  const navbarLinks = document.querySelector(".navbar-links");
-  const hamburger = document.querySelector(".hamburger");
-  navbarLinks.classList.toggle("show"); // shows or hides menu
-  hamburger.classList.toggle("open");   // animate burger to X
+  const hamburger = document.querySelector('.hamburger');
+  const menu = document.querySelector('.navbar-links');
+  hamburger.classList.toggle('open');
+  menu.classList.toggle('show');
+}
+
+function toggleDropdown(e, el) {
+  e.preventDefault();
+  const dropdown = el.parentElement;
+  dropdown.classList.toggle('open');
 }
 </script>
 
