@@ -98,11 +98,135 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
-  <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
+     <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
+    <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
+    <nav class="navbar">
+        <a href="index.html">דף הבית</a>
+        <a href="index.html">סדנאות</a>
+
+        <!-- Dropdown menu for כלי עזר -->
+        <div class="dropdown">
+    <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+        כלי עזר <span class="triangle"></span>
+    </a>
+    <div class="dropdown-content">
+        <a href="starter_calculator.html">מחשבון מחמצת</a>
+    </div>
+</div>
+
+
+<a href="https://wa.me/972544635149?text=היי%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת%20" target="_blank">
+    צור קשר
+</a>
+
 </header>
+
+<style>
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;
+    gap: 25px; /* space between items */
+    flex-wrap: wrap;
+    background: #8c5a2b;
+    padding: 12px 20px;
+    border-radius: 12px;
+}
+
+.navbar a, .dropbtn {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.navbar a:hover, .dropbtn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+
+    /* ✅ animation setup */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dropdown.open .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown-content a {
+    color: #2c2c2c;
+    padding: 10px 15px;
+    display: block;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0e6dc;
+}
+
+
+
+/* Responsive adjustments */
+@media(max-width:600px){
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* Triangle arrow */
+.triangle {
+    display: inline-block;
+    margin-right: 6px; /* RTL spacing */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid white;
+
+    transform: rotate(0deg);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Rotate when open */
+.dropdown.open .triangle {
+    transform: rotate(180deg);
+}
+
+
+.dropdown.open .dropdown-content {
+    display: block;
+}
+</style>
+
+
 <main>
+
 
 <div class="carousel-container">
   <div class="carousel-track">
@@ -185,5 +309,20 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
     </a>
   </div>
 </footer>
+<script>
+function toggleDropdown(e, el) {
+    e.preventDefault(); // stop page jump
+    const dropdown = el.parentElement;
+    dropdown.classList.toggle("open");
+}
+</script>
+
+<script>
+window.addEventListener("pageshow", function () {
+    document.querySelectorAll(".dropdown").forEach(drop => {
+        drop.classList.remove("open");
+    });
+});
+</script>
 </body>
 </html>
