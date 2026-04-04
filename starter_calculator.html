@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מחשבון מחמצת 🧫</title>
+<title>מחשבון מחמצת</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=Heebo:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -245,6 +245,29 @@
     .navbar { flex-direction: column; gap: 12px; }
   }
 
+
+  /* Make results horizontal on mobile */
+@media (max-width: 480px) {
+  .results-grid {
+    display: flex;
+    flex-wrap: wrap;       /* allow wrapping if necessary */
+    justify-content: space-between;
+    gap: 12px;             /* spacing between items */
+  }
+
+  .result-item {
+    flex: 1 1 30%;          /* roughly 3 items per row, shrink if needed */
+    min-width: 90px;        /* prevent items from being too narrow */
+    border-left: none;      /* remove vertical separators for mobile */
+    text-align: center;
+  }
+
+  .result-item.result-total {
+    flex-basis: 100%;       /* total row takes full width */
+    border-top: 1px solid var(--border);
+    margin-top: 12px;
+  }
+}
 </style>
 </head>
 <body>
