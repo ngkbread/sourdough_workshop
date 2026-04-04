@@ -229,16 +229,30 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 /* Dropdown */
 .dropdown { position: relative; display: inline-block; }
 
-.dropdown-content {
-  display: none;
-  flex-direction: column;
-  background-color: #8c5a2b;
-  gap: 8px;
-  padding: 10px 0;
-}
+@media(max-width:600px){
+  .dropdown-content {
+    display: none;
+    flex-direction: column;
+    background-color: #fff; /* white background for visibility */
+    gap: 8px;
+    padding: 10px 0;
+    border-radius: 8px; /* optional */
+  }
 
-.dropdown.open .dropdown-content {
-  display: flex;
+  .dropdown-content a {
+    color: #2c2c2c; /* dark text for contrast */
+    padding: 10px 15px;
+    display: block;
+    font-weight: 500;
+  }
+
+  .dropdown.open .dropdown-content {
+    display: flex;
+    position: absolute;
+    top: 100%; /* below the button */
+    right: 0;
+    z-index: 1200; /* above mobile menu */
+  }
 }
 
 /* Hamburger animation */
@@ -275,12 +289,12 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 
             <!-- Dropdown menu for כלי עזר -->
             <div class="dropdown">
-                <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
-                    כלי עזר <span class="triangle"></span>
-                </a>
-                <div class="dropdown-content">
-                    <a href="starter_calculator.html">מחשבון מחמצת</a>
-                </div>
+              <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+                  כלי עזר <span class="triangle"></span>
+              </a>
+              <div class="dropdown-content">
+                  <a href="starter_calculator.html">מחשבון מחמצת</a>
+              </div>
             </div>
             <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
             <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" target="_blank">
