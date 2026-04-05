@@ -467,7 +467,12 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   width: 28px;
   height: 20px;
   cursor: pointer;
-  margin: 15px auto 0 auto; /* centered under paragraph */
+
+  /* new: fix top-right on mobile */
+  position: fixed;
+  top: 5px;      /* distance from top */
+  right: 15px;    /* distance from right */
+  z-index: 1100;  /* above other elements */
 }
 
 .hamburger span {
