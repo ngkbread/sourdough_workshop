@@ -4,63 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>מחשבון מחמצת</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=Heebo:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #f5f0e8;
-    --warm-white: #faf8f3;
-    --tan: #d4b896;
-    --brown: #8b6542;
-    --dark-brown: #4a3018;
-    --crust: #c17f3b;
-    --mold-green: #5a7a4a;
-    --text: #2c1a0a;
-    --text-muted: #7a5c3a;
-    --border: #ddd0b8;
-    --highlight: #fff8e8;
-  }
+:root {
+  --cream: #f5f0e8;
+  --warm-white: #faf8f3;
+  --tan: #d4b896;
+  --brown: #8b6542;
+  --dark-brown: #4a3018;
+  --crust: #c17f3b;
+  --mold-green: #5a7a4a;
+  --text: #2c1a0a;
+  --text-muted: #7a5c3a;
+  --border: #ddd0b8;
+  --highlight: #fff8e8;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* Reset and base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(197,143,80,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(90,122,74,0.08) 0%, transparent 50%);
+  font-family: 'Heebo', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+}
+.container { max-width: 680px; margin: 0 auto; }
 
-  body {
-    background-color: var(--cream);
-    background-image:
-      radial-gradient(ellipse at 20% 20%, rgba(197,143,80,0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(90,122,74,0.08) 0%, transparent 50%);
-    font-family: 'Heebo', sans-serif;
-    color: var(--text);
-    min-height: 100vh;
-    padding: 40px 20px 60px;
-  }
+/* Header & title */
+header { text-align: center; margin-bottom: 48px; }
+h1 {
+  font-family: 'Heebo', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--dark-brown);
+  line-height: 1.15;
+  font-weight: 1100;
+  font-stretch: expanded;
+  letter-spacing: 0.5px;
+}
+.subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
 
-  .container { max-width: 680px; margin: 0 auto; }
-
-  header { text-align: center; margin-bottom: 48px; }
-
-  .jar-icon {
-    font-size: 64px; display: block; margin-bottom: 8px;
-    animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0 8px 16px rgba(139,101,66,0.25));
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(-2deg); }
-    50% { transform: translateY(-8px) rotate(2deg); }
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--dark-brown); line-height: 1.15;
-  }
-  .subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
-
-  .card {
-    background: var(--warm-white); border: 1.5px solid var(--border);
-    border-radius: 20px; padding: 32px 36px; margin-bottom: 24px;
-    box-shadow: 0 4px 24px rgba(74,48,24,0.08);
-    position: relative; overflow: hidden;
-  }
-  .card::before {
+/* Card style */
+.card {
+  background: var(--warm-white); border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 32px 36px; margin-bottom: 24px;
+  box-shadow: 0 4px 24px rgba(74,48,24,0.08);
+  position: relative; overflow: hidden;
+}
+.card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -68,205 +62,110 @@
   background: linear-gradient(90deg, var(--crust), var(--mold-green), var(--tan));
   border-radius: 20px 20px 0 0;
 }
+.card.no-gradient::before { display: none; }
 
-.card.no-gradient::before {
-  display: none;
+/* Params grid */
+.params-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 500px) { .params-grid { grid-template-columns: 1fr; } .card { padding: 24px 20px; } }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field.full-width { grid-column: 1 / -1; }
+label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+input[type="number"] {
+  background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 12px 16px; font-family: 'DM Mono', monospace; font-size: 1.1rem;
+  color: var(--dark-brown); width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+  -moz-appearance: textfield;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+input[type="number"]:focus { border-color: var(--crust); box-shadow: 0 0 0 3px rgba(193,127,59,0.15); }
 
-  .card-title {
-    font-family: 'Playfair Display', serif; font-size: 1.2rem;
-    color: var(--dark-brown); margin-bottom: 24px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .card-title-icon {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--tan), var(--crust));
-    border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;
-  }
+/* Ratio buttons */
+.ratio-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.ratio-btn {
+  background: var(--cream); border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 14px; font-family: 'DM Mono', monospace; font-size: 0.85rem;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s; font-weight: 500;
+}
+.ratio-btn:hover { border-color: var(--crust); color: var(--crust); background: var(--highlight); }
+.ratio-btn.active { background: var(--dark-brown); border-color: var(--dark-brown); color: var(--cream); }
 
-  .params-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 500px) { .params-grid { grid-template-columns: 1fr; } .card { padding: 24px 20px; } }
+.custom-row {
+  display: none; align-items: center; gap: 10px; margin-top: 12px;
+  font-size: 0.85rem; color: var(--text-muted);
+}
+.custom-row input { width: 90px; padding: 8px 12px; font-size: 0.95rem; }
 
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .field.full-width { grid-column: 1 / -1; }
+.ratio-preview {
+  margin-top: 14px; background: var(--highlight); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 16px; font-size: 0.88rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.ratio-value { font-family: 'DM Mono', monospace; font-size: 1.15rem; font-weight: 700; color: var(--dark-brown); letter-spacing: 1px; }
 
-  label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+/* Results */
+.results-card {
+  background: var(--warm-white); border: 1.5px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(74,48,24,0.08);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.results-card.visible { opacity: 1; transform: translateY(0); }
+.results-header {
+  background: linear-gradient(135deg, var(--dark-brown), var(--brown));
+  padding: 20px 32px; color: var(--cream);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.results-header h2 { font-family: 'Heebo', sans-serif; font-size: 1.1rem; }
+.results-ratio-badge {
+  background: rgba(255,255,255,0.15); border-radius: 20px;
+  padding: 4px 14px; font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 1px;
+}
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
+@media (max-width: 480px) { .results-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; } .result-item { flex: 1 1 30%; min-width: 90px; border-left: none; text-align: center; } .result-item.result-total { flex-basis: 100%; border-top: 1px solid var(--border); margin-top: 12px; } }
+.result-item { padding: 24px 20px; border-left: 1px solid var(--border); text-align: center; }
+.result-item.result-total { background: var(--highlight); grid-column: 1 / -1; border-left: none; border-top: 1px solid var(--border); }
+.result-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--dark-brown); margin-bottom: 12px; }
+.result-value { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--dark-brown); line-height: 1; }
+.result-unit { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 300; }
+.result-total .result-value { color: var(--crust); font-size: 2.2rem; }
 
-  input[type="number"] {
-    background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 12px 16px; font-family: 'DM Mono', monospace; font-size: 1.1rem;
-    color: var(--dark-brown); width: 100%;
-    transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-    -moz-appearance: textfield;
-  }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-  input[type="number"]:focus { border-color: var(--crust); box-shadow: 0 0 0 3px rgba(193,127,59,0.15); }
+/* Footer */
+footer { text-align: center; margin-top: 48px; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
 
-  .ratio-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-  .ratio-btn {
-    background: var(--cream); border: 1.5px solid var(--border); border-radius: 8px;
-    padding: 8px 14px; font-family: 'DM Mono', monospace; font-size: 0.85rem;
-    color: var(--text-muted); cursor: pointer; transition: all 0.2s; font-weight: 500;
-  }
-  .ratio-btn:hover { border-color: var(--crust); color: var(--crust); background: var(--highlight); }
-  .ratio-btn.active { background: var(--dark-brown); border-color: var(--dark-brown); color: var(--cream); }
+/* Navbar */
+.navbar { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; background: #8c5a2b; padding: 12px 20px; border-radius: 12px; margin-bottom: 24px; position: relative; }
+.navbar a, .dropbtn { color: white; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 6px; transition: background 0.3s; }
+.navbar a:hover, .dropbtn:hover { background: rgba(255,255,255,0.2); }
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content {
+  position: absolute; right: 0; background-color: #fff; min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; z-index: 1000;
+  opacity: 0; transform: translateY(-10px); pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.dropdown.open .dropdown-content { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.dropdown-content a { color: #2c2c2c; padding: 10px 15px; display: block; font-weight: 500; }
+.dropdown-content a:hover { background-color: #f0e6dc; }
+.triangle { display: inline-block; margin-right: 6px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid white; transition: transform 0.5s; }
+.dropdown.open .triangle { transform: rotate(180deg); }
 
-  .custom-row {
-    display: none; align-items: center; gap: 10px; margin-top: 12px;
-    font-size: 0.85rem; color: var(--text-muted);
-  }
-  .custom-row input { width: 90px; padding: 8px 12px; font-size: 0.95rem; }
+/* Hamburger for mobile */
+.hamburger {
+  display: none; cursor: pointer; flex-direction: column; gap: 4px; padding: 8px; margin-left: auto;
+}
+.hamburger div { width: 28px; height: 3px; background: white; border-radius: 2px; transition: all 0.3s; }
+.hamburger.active div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active div:nth-child(2) { opacity: 0; }
+.hamburger.active div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-  .ratio-preview {
-    margin-top: 14px; background: var(--highlight); border: 1.5px solid var(--border);
-    border-radius: 10px; padding: 12px 16px; font-size: 0.88rem; color: var(--text-muted);
-    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  }
-  .ratio-value {
-    font-family: 'DM Mono', monospace; font-size: 1.15rem;
-    font-weight: 700; color: var(--dark-brown); letter-spacing: 1px;
-  }
-
-  .results-card {
-    background: var(--warm-white); border: 1.5px solid var(--border);
-    border-radius: 20px; overflow: hidden;
-    box-shadow: 0 4px 24px rgba(74,48,24,0.08);
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .results-card.visible { opacity: 1; transform: translateY(0); }
-
-  .results-header {
-    background: linear-gradient(135deg, var(--dark-brown), var(--brown));
-    padding: 20px 32px; color: var(--cream);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .results-header h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
-  .results-ratio-badge {
-    background: rgba(255,255,255,0.15); border-radius: 20px;
-    padding: 4px 14px; font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 1px;
-  }
-
-  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
-  @media (max-width: 480px) { .results-grid { grid-template-columns: 1fr 1fr; } }
-
-  .result-item { padding: 24px 20px; border-left: 1px solid var(--border); text-align: center; }
-  .result-item:last-child { border-left: none; }
-  .result-item.result-total {
-    background: var(--highlight); grid-column: 1 / -1;
-    border-left: none; border-top: 1px solid var(--border);
-  }
-
-  .result-label {
-    font-size: 0.9rem; text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    color: var(--dark-brown);
-    margin-bottom: 12px;
-  }
-  .result-value { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--dark-brown); line-height: 1; }
-  .result-unit { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 300; }
-  .result-total .result-value { color: var(--crust); font-size: 2.2rem; }
-
-  footer { text-align: center; margin-top: 48px; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
-
-  /* Navbar integration */
-  .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    background: #8c5a2b;
-    padding: 12px 20px;
-    border-radius: 12px;
-    margin-bottom: 24px;
-  }
-
-  .navbar a, .dropbtn {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: background 0.3s;
-  }
-
-  .navbar a:hover, .dropbtn:hover { background: rgba(255,255,255,0.2); }
-
-  .dropdown { position: relative; display: inline-block; }
-  .dropdown-content {
-    position: absolute;
-    right: 0;
-    background-color: #fff;
-    min-width: 180px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-radius: 8px;
-    overflow: hidden;
-    z-index: 1000;
-
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
-  .dropdown.open .dropdown-content {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .dropdown-content a {
-    color: #2c2c2c;
-    padding: 10px 15px;
-    display: block;
-    font-weight: 500;
-  }
-
-  .dropdown-content a:hover { background-color: #f0e6dc; }
-
-  .triangle {
-    display: inline-block;
-    margin-right: 6px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid white;
-    transform: rotate(0deg);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .dropdown.open .triangle { transform: rotate(180deg); }
-
-  @media(max-width:600px){
-    .navbar { flex-direction: column; gap: 12px; }
-  }
-
-
-  /* Make results horizontal on mobile */
-@media (max-width: 480px) {
-  .results-grid {
-    display: flex;
-    flex-wrap: wrap;       /* allow wrapping if necessary */
-    justify-content: space-between;
-    gap: 12px;             /* spacing between items */
-  }
-
-  .result-item {
-    flex: 1 1 30%;          /* roughly 3 items per row, shrink if needed */
-    min-width: 90px;        /* prevent items from being too narrow */
-    border-left: none;      /* remove vertical separators for mobile */
-    text-align: center;
-  }
-
-  .result-item.result-total {
-    flex-basis: 100%;       /* total row takes full width */
-    border-top: 1px solid var(--border);
-    margin-top: 12px;
-  }
+@media(max-width:600px){
+  .navbar { flex-direction: column; align-items: flex-start; gap: 0; }
+  .navbar-links-mobile { display: none; flex-direction: column; width: 100%; margin-top: 12px; gap: 12px; }
+  .navbar-links-mobile.show { display: flex; }
+  .hamburger { display: flex; }
 }
 </style>
 </head>
@@ -275,41 +174,40 @@
 
   <header>
     <nav class="navbar">
-      <a href="index.html">דף הבית</a>
-      <a href="index.html#about">אודות</a>
-      <div class="dropdown">
-        <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
-          כלי עזר <span class="triangle"></span>
-        </a>
-        <div class="dropdown-content">
-          <a href="starter_calculator.html">מחשבון מחמצת</a>
-        </div>
+      <div class="hamburger" onclick="toggleHamburger(this)">
+        <div></div><div></div><div></div>
       </div>
-      <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
-      <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" target="_blank">
-        צור קשר
-      </a>
+      <div class="navbar-links-mobile">
+        <a href="index.html">דף הבית</a>
+        <a href="index.html#about">אודות</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+            כלי עזר <span class="triangle"></span>
+          </a>
+          <div class="dropdown-content">
+            <a href="starter_calculator.html">מחשבון מחמצת</a>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
+        <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" target="_blank">צור קשר</a>
+      </div>
     </nav>
 
     <h1>מחשבון מחמצת</h1>
     <p class="subtitle">הגדירו את משקל המחמצת הרצוי, ההידרציה הרצויה של המחמצת ויחס הקמח בהאכלה — וקבלו משקלים מדויקים</p>
   </header>
 
-  <!-- Calculator card and results unchanged -->
-<div class="card no-gradient">
-
+  <!-- Calculator Card -->
+  <div class="card no-gradient">
     <div class="params-grid">
-
       <div class="field">
         <label>משקל מחמצת רצוי (גרם)</label>
         <input type="number" id="targetWeight" value="300" min="1" step="1" oninput="calculate()">
       </div>
-
       <div class="field">
         <label>אחוז הידרציה (%)</label>
         <input type="number" id="hydration" value="100" min="1" max="300" step="1" oninput="calculate()">
       </div>
-
       <div class="field full-width">
         <label>כמה קמח להוסיף על כל כמות מחמצת</label>
         <div class="ratio-buttons" id="ratioButtons">
@@ -331,10 +229,10 @@
           <span style="font-size:0.8rem;">(קמח : מים : מחמצת)</span>
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- Results Card -->
   <div class="results-card" id="resultsCard">
     <div class="results-header">
       <h2>תוצאת האכלה</h2>
@@ -342,19 +240,16 @@
     </div>
     <div class="results-grid">
       <div class="result-item">
-        <div class="result-dot dot-flour"></div>
         <div class="result-label">קמח</div>
         <div class="result-value" id="resFlour">—</div>
         <div class="result-unit">גרם</div>
       </div>
       <div class="result-item">
-        <div class="result-dot dot-water"></div>
         <div class="result-label">מים</div>
         <div class="result-value" id="resWater">—</div>
         <div class="result-unit">גרם</div>
       </div>
       <div class="result-item">
-        <div class="result-dot dot-starter"></div>
         <div class="result-label">מחמצת</div>
         <div class="result-value" id="resStarter">—</div>
         <div class="result-unit">גרם</div>
@@ -372,52 +267,51 @@
 </div>
 
 <script>
-  let flourRatio = 1;
-  function getHydration() { return parseFloat(document.getElementById('hydration').value) || 100; }
-  function getWaterRatio() { return flourRatio * (getHydration() / 100); }
-  function fmtRatio(n) { return Number.isInteger(n) ? String(n) : String(+n.toFixed(2)); }
-  function getRatioLabel(f, w) { return `1:${fmtRatio(w)}:${fmtRatio(f)}`; }
-  function computeWeights(target, f, w) { const starter = target / (1 + f + w); return { starter, flour: starter * f, water: starter * w }; }
-  function fmt(n) { return (Math.round(n)); }
-  document.getElementById('ratioButtons').addEventListener('click', e => {
-    const btn = e.target.closest('.ratio-btn'); if (!btn) return;
-    document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-    const val = btn.dataset.flour;
-    const customRow = document.getElementById('customRow');
-    if (val === 'custom') { customRow.style.display = 'flex'; flourRatio = parseFloat(document.getElementById('customFlour').value) || 3; }
-    else { customRow.style.display = 'none'; flourRatio = parseFloat(val); }
-    calculate();
-  });
-  function onCustomFlourChange() { flourRatio = parseFloat(document.getElementById('customFlour').value) || 1; calculate(); }
-  function calculate() {
-    const target = parseFloat(document.getElementById('targetWeight').value) || 310;
-    const w = getWaterRatio();
-    const wts = computeWeights(target, flourRatio, w);
-    const label = getRatioLabel(flourRatio, w);
-    document.getElementById('resFlour').textContent   = fmt(wts.flour);
-    document.getElementById('resWater').textContent   = fmt(wts.water);
-    document.getElementById('resStarter').textContent = fmt(wts.starter);
-    document.getElementById('resTotal').textContent   = fmt(target);
-    document.getElementById('resultRatioBadge').textContent = label;
-    document.getElementById('ratioDisplay').textContent = label;
-    document.getElementById('resultsCard').classList.add('visible');
-  }
-  calculate();
-</script>
+// Hamburger toggle
+function toggleHamburger(el){
+  el.classList.toggle("active");
+  document.querySelector(".navbar-links-mobile").classList.toggle("show");
+}
 
-<!-- Navbar JS -->
-<script>
-function toggleDropdown(e, el) {
+// Dropdown toggle
+function toggleDropdown(e, el){
   e.preventDefault();
   const dropdown = el.parentElement;
   dropdown.classList.toggle("open");
 }
-window.addEventListener("pageshow", function () {
-  document.querySelectorAll(".dropdown").forEach(drop => drop.classList.remove("open"));
+
+// Calculator
+let flourRatio = 1;
+function getHydration(){ return parseFloat(document.getElementById('hydration').value)||100; }
+function getWaterRatio(){ return flourRatio*(getHydration()/100); }
+function fmtRatio(n){ return Number.isInteger(n)?String(n):String(+n.toFixed(2)); }
+function getRatioLabel(f,w){ return `1:${fmtRatio(w)}:${fmtRatio(f)}`; }
+function computeWeights(target,f,w){ const starter=target/(1+f+w); return {starter, flour:starter*f, water:starter*w}; }
+function fmt(n){ return Math.round(n); }
+document.getElementById('ratioButtons').addEventListener('click', e=>{
+  const btn=e.target.closest('.ratio-btn'); if(!btn) return;
+  document.querySelectorAll('.ratio-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  const val=btn.dataset.flour; const customRow=document.getElementById('customRow');
+  if(val==='custom'){ customRow.style.display='flex'; flourRatio=parseFloat(document.getElementById('customFlour').value)||3; }
+  else { customRow.style.display='none'; flourRatio=parseFloat(val); }
+  calculate();
 });
+function onCustomFlourChange(){ flourRatio=parseFloat(document.getElementById('customFlour').value)||1; calculate(); }
+function calculate(){
+  const target=parseFloat(document.getElementById('targetWeight').value)||310;
+  const w=getWaterRatio();
+  const wts=computeWeights(target, flourRatio, w);
+  const label=getRatioLabel(flourRatio,w);
+  document.getElementById('resFlour').textContent=fmt(wts.flour);
+  document.getElementById('resWater').textContent=fmt(wts.water);
+  document.getElementById('resStarter').textContent=fmt(wts.starter);
+  document.getElementById('resTotal').textContent=fmt(target);
+  document.getElementById('resultRatioBadge').textContent=label;
+  document.getElementById('ratioDisplay').textContent=label;
+  document.getElementById('resultsCard').classList.add('visible');
+}
+calculate();
 </script>
 
 </body>
 </html>
-
-
