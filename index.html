@@ -186,16 +186,18 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 @media(max-width:600px){
 
 .hamburger {
-  display: flex;
+  display: none; /* hidden on desktop */
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 40px;          /* make it square */
+  height: 40px;         /* same as width */
   cursor: pointer;
-  position: fixed;
-  top: 3px;
-  right: 10px;
-  z-index: 1100;
+  margin: 15px auto 0;
+  background-color: #8c5a2b; /* brown background */
+  border-radius: 8px;   /* optional rounded corners */
+  padding: 8px;         /* space inside for bars */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* optional shadow */
+  z-index: 1200;        /* ensure above everything */
 }
 
 .hamburger span {
@@ -203,7 +205,7 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   height: 3px;
   background: white;
   border-radius: 2px;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .navbar-links {
