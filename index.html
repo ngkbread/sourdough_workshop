@@ -227,7 +227,7 @@ ul{padding-right:20px}
 
   .navbar-links{
     position:fixed;
-    top:130px;
+    top:0;
     right:-100%;
     width:250px;
     height:calc(100% - 130px);
@@ -285,31 +285,30 @@ ul{padding-right:20px}
 <body>
 
 <header>
-    
     <h1>סדנת אפיית לחמי מחמצת - באהבה</h1>
     <p>בואו להכיר ולהעמיק בעולם המופלא של אפיית לחמי מחמצת!</p>
 
+    <!-- Hamburger -->
+    <div class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <!-- Navbar links -->
     <div class="navbar-links">
-        <!-- Hamburger inside menu -->
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
         <nav class="navbar">
             <a href="index.html">דף הבית</a>
             <a href="#about">אודות</a>
 
             <!-- Dropdown menu for כלי עזר -->
             <div class="dropdown">
-                <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
-                    כלי עזר <span class="triangle"></span>
-                </a>
-                <div class="dropdown-content">
-                    <a href="starter_calculator.html">מחשבון מחמצת</a>
-                </div>
+              <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+                  כלי עזר <span class="triangle"></span>
+              </a>
+              <div class="dropdown-content">
+                  <a href="starter_calculator.html">מחשבון מחמצת</a>
+              </div>
             </div>
             <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
             <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" target="_blank">
