@@ -6,7 +6,7 @@
 <title>סדנאות אפיית לחמי מחמצת - באהבה</title>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <style>
+<style>
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;font-family:'Assistant',sans-serif;background-color:#faf7f2;color:#2c2c2c;line-height:1.6;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
 html{height:100%}
@@ -230,11 +230,11 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 .dropdown { position: relative; display: inline-block; }
 
 @media(max-width:600px){
-@media(max-width:600px){
+  /* Mobile dropdown override */
   .dropdown-content {
-    display: none;            /* default hidden */
-    opacity: 1 !important;    /* force text to be visible */
-    transform: translateY(0) !important; /* reset transform */
+    display: none; /* hidden by default */
+    opacity: 1 !important; /* force text visible */
+    transform: translateY(0) !important; /* reset translation */
     background-color: #fff;
     flex-direction: column;
     gap: 8px;
@@ -243,29 +243,24 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   }
 
   .dropdown.open .dropdown-content {
-    display: flex;
+    display: flex; /* show dropdown */
     position: absolute;
     top: 100%;
     right: 0;
     z-index: 1200;
   }
 
+  /* Text style identical to second script */
   .dropdown-content a {
-    color: #2c1a0a; /* match your second script */
+    color: #2c1a0a;
     font-family: 'Heebo', sans-serif;
     font-weight: 500;
+    padding: 10px 15px;
   }
-}
 
-/* Hamburger animation */
-.hamburger.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  .dropdown-content a:hover {
+    background-color: #f0e6dc;
+  }
 }
 </style>
 
