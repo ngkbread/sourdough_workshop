@@ -516,28 +516,30 @@ ul{padding-right:20px}
     gap:12px
   }
 
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 50px;      /* wider square */
-  height: 50px;     /* taller square */
-  cursor: pointer;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: #8c5a2b; /* brown background */
-  border-radius: 8px;        /* slightly rounded corners */
-  padding: 10px;             /* spacing inside so lines aren’t squished */
-  z-index: 1100;
-}
+/* Mobile menu below burger */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* lines as before, spaced nicely */
+    width: 30px;      /* bigger square width */
+    height: 30px;     /* bigger square height */
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1100;
+    background-color: #8c5a2b; /* brown square */
+    border-radius: 8px;        /* optional rounded corners */
+    padding: 10px;             /* keep lines away from edges */
+  }
 
-.hamburger span {
-  display: block;
-  height: 3px;       /* keep original line thickness */
-  background: white; /* lines stay white */
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  .hamburger span {
+    display: block;
+    height: 3px;       /* line thickness */
+    background: white; /* color */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
 }
   .navbar-links{
     position:fixed;
