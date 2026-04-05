@@ -197,8 +197,8 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
   right: 10px;
   z-index: 1100;
   background-color: #8c5a2b; /* your brown */
-  border-radius: 4px;        /* optional, soft corners */
-  padding: 3px;
+  border-radius: 0px;        /* optional, soft corners */
+  padding: 10px;
 }
 
 .hamburger span {
@@ -563,13 +563,15 @@ ul{padding-right:20px}
 
   /* Hamburger animation */
   .hamburger.open span:nth-child(1){
-    transform:rotate(45deg) translate(5px,5px)
+    transform: rotate(45deg);
+    transform-origin: center;
   }
   .hamburger.open span:nth-child(2){
-    opacity:0
+    opacity:0;
   }
   .hamburger.open span:nth-child(3){
-    transform:rotate(-45deg) translate(5px,-5px)
+    transform: rotate(-45deg);
+    transform-origin: center;
   }
 }
 </style>
@@ -656,6 +658,7 @@ ul{padding-right:20px}
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4" ry="4"/><line x1="8" y1="11" x2="8" y2="16"/><line x1="8" y1="8" x2="8" y2="8.5"/><line x1="12" y1="16" x2="12" y2="11"/><path d="M12 13a2 2 0 0 1 4 0v3"/><line x1="16" y1="16" x2="16" y2="13"/></svg>
       LinkedIn
     </a>
+
   </div>
 </footer>
 <script>
