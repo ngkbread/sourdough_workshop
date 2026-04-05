@@ -516,8 +516,29 @@ ul{padding-right:20px}
     gap:12px
   }
 
-  .hamburger{display:flex}
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50px;      /* wider square */
+  height: 50px;     /* taller square */
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #8c5a2b; /* brown background */
+  border-radius: 8px;        /* slightly rounded corners */
+  padding: 10px;             /* spacing inside so lines aren’t squished */
+  z-index: 1100;
+}
 
+.hamburger span {
+  display: block;
+  height: 3px;       /* keep original line thickness */
+  background: white; /* lines stay white */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
   .navbar-links{
     position:fixed;
     top:130px;
