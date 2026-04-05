@@ -185,32 +185,25 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 /* Mobile menu below burger */
 @media(max-width:600px){
 
-@media(max-width:600px){
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  position: fixed;
+  top: 3px;
+  right: 10px;
+  z-index: 1100;
+}
 
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* keeps lines evenly spaced */
-    width: 40px;      /* bigger square */
-    height: 40px;     /* bigger square */
-    cursor: pointer;
-    position: fixed;
-    top: 3px;
-    right: 10px;
-    z-index: 1100;
-    background-color: #8c5a2b; /* brown square */
-    border-radius: 8px;        /* optional rounded corners */
-    padding: 10px;             /* keeps lines away from edges */
-  }
-
-  .hamburger span {
-    display: block;
-    height: 3px;       /* line thickness stays the same */
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 .navbar-links {
