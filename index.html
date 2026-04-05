@@ -193,12 +193,12 @@ ul{padding-right:20px}
 
 /* Hamburger */
 .hamburger {
-  display: none;
+  display: flex;
   flex-direction: column;
-  justify-content: center;  /* change from space-between to center */
-  gap: 6px;                 /* control spacing with gap instead */
+  justify-content: center;
+  gap: 6px;
   width: 28px;
-  height: 20px;
+  height: 24px;  /* give a fixed height */
   cursor: pointer;
   margin: 15px auto 0;
 }
@@ -212,6 +212,7 @@ ul{padding-right:20px}
   transition:0.3s;
   transform-origin:center; /* important! */
 }
+
 
 
 
@@ -230,7 +231,7 @@ ul{padding-right:20px}
   }
 
   .hamburger{display:flex}
-  
+
   .navbar-links {
     position: fixed;
     top: 0;           /* start from very top */
@@ -256,36 +257,41 @@ ul{padding-right:20px}
     width:100%
   }
 
-  /* ✅ FIXED DROPDOWN (this was your bug) */
-  .navbar-links .dropdown-content{
-    position:relative;
-    display:none;
-    opacity:1;
-    transform:none;
-    pointer-events:auto;
-  }
+  /* FIXED DROPDOWN */
+  .navbar-links .dropdown-content {
+  position: relative;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+  display: block; /* keep it block always */
+}
 
-  .navbar-links .dropdown.open .dropdown-content{
-    display:flex;
-    flex-direction:column;
-  }
+.navbar-links .dropdown.open .dropdown-content {
+  opacity: 1;
+  max-height: 200px;
+  transform: translateY(0);
+  pointer-events: auto;
+}
 
   .navbar-links .dropdown-content a{
     color:#2c2c2c;
   }
 
   /* Hamburger animation */
-  .hamburger.open span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
 
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
 
-  .hamburger.open span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
 
 
 }
