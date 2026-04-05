@@ -230,28 +230,30 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 .dropdown { position: relative; display: inline-block; }
 
 @media(max-width:600px){
+@media(max-width:600px){
   .dropdown-content {
-    display: none;
+    display: none;            /* default hidden */
+    opacity: 1 !important;    /* force text to be visible */
+    transform: translateY(0) !important; /* reset transform */
+    background-color: #fff;
     flex-direction: column;
-    background-color: #fff; /* white background for visibility */
     gap: 8px;
     padding: 10px 0;
-    border-radius: 8px; /* optional */
+    border-radius: 8px;
   }
-
-  .dropdown-content a {
-    color: #2c1a0a;       /* match second script text color */
-    font-family: 'Heebo', sans-serif; /* optional, to match calculator font */
-    font-weight: 500;     /* already matches */
-  }
-
 
   .dropdown.open .dropdown-content {
     display: flex;
     position: absolute;
-    top: 100%; /* below the button */
+    top: 100%;
     right: 0;
-    z-index: 1200; /* above mobile menu */
+    z-index: 1200;
+  }
+
+  .dropdown-content a {
+    color: #2c1a0a; /* match your second script */
+    font-family: 'Heebo', sans-serif;
+    font-weight: 500;
   }
 }
 
