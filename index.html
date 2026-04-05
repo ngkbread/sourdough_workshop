@@ -229,30 +229,31 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 /* Dropdown */
 .dropdown { position: relative; display: inline-block; }
 
+
 @media(max-width:600px){
   /* Mobile dropdown override */
   .dropdown-content {
-    display: none; /* hidden by default */
-    opacity: 1 !important; /* force text visible */
-    transform: translateY(0) !important; /* reset translation */
+    display: none;           /* hidden by default */
+    position: relative;      /* <-- key change */
+    top: auto;
+    right: auto;
+    opacity: 1 !important;
+    transform: none !important;
     background-color: #fff;
     flex-direction: column;
     gap: 8px;
     padding: 10px 0;
     border-radius: 8px;
+    width: 100%;             /* make it fit inside the mobile menu */
   }
 
   .dropdown.open .dropdown-content {
-    display: flex; /* show dropdown */
-    position: absolute;
-    top: 100%;
-    right: 0;
-    z-index: 1200;
+    display: flex;           /* show dropdown */
   }
 
-  /* Text style identical to second script */
+  /* Mobile dropdown links style */
   .dropdown-content a {
-    color: #2c1a0a;
+    color: #2c1a0a;          /* match second script */
     font-family: 'Heebo', sans-serif;
     font-weight: 500;
     padding: 10px 15px;
