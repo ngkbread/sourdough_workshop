@@ -358,11 +358,11 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 });
 
 // Clear default value on focus, restore if left empty
-document.querySelectorAll('input[type="number"]').forEach(input => {
-  const defaultValue = input.value;
+document.querySelectorAll('#targetWeight, #hydration, #customFlour').forEach(input => {
   input.addEventListener('focus', () => {
-    if(input.value === defaultValue) input.value = '';
+    input.value = ''; // clear whatever is currently in the field
   });
+});
   input.addEventListener('blur', () => {
     if(input.value === '') input.value = defaultValue;
     calculate(); // recalc if blurred

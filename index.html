@@ -314,8 +314,8 @@ ul{padding-right:20px}
     <!-- Navbar links -->
     <div class="navbar-links">
         <nav class="navbar">
-            <a href="index.html">דף הבית</a>
-            <a href="#about">אודות</a>
+            <a href="index.html" class="close-burger">דף הבית</a>
+            <a href="#about" class="close-burger">אודות</a>
 
             <!-- Dropdown menu for כלי עזר -->
             <div class="dropdown">
@@ -323,11 +323,11 @@ ul{padding-right:20px}
                   כלי עזר <span class="triangle"></span>
               </a>
               <div class="dropdown-content">
-                  <a href="starter_calculator.html">מחשבון מחמצת</a>
+                  <a href="starter_calculator.html" class="close-burger">מחשבון מחמצת</a>
               </div>
             </div>
-            <a href="https://www.instagram.com/ngkbread" target="_blank" rel="noopener noreferrer">גלריה</a>
-            <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" target="_blank">
+            <a href="https://www.instagram.com/ngkbread" class="close-burger" target="_blank" rel="noopener noreferrer">גלריה</a>
+            <a href="https://wa.me/972544635149?text=היי,%20אשמח%20לברר%20לגבי%20הסדנה%20לאפיית%20לחמי%20מחמצת.%20" class="close-burger" target="_blank">
                 צור קשר
             </a>
         </nav>
@@ -837,10 +837,11 @@ function toggleDropdown(e, el) {
 </script>
 
 <script>
-document.querySelectorAll('.navbar-links a').forEach(link => {
+// Only links with .close-burger will close the mobile menu
+document.querySelectorAll('.navbar-links-mobile a.close-burger').forEach(link => {
   link.addEventListener('click', () => {
-    document.querySelector('.hamburger').classList.remove('open');
-    document.querySelector('.navbar-links').classList.remove('show');
+    document.querySelector('.hamburger').classList.remove('active');
+    document.querySelector('.navbar-links-mobile').classList.remove('show');
   });
 });
 </script>
