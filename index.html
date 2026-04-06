@@ -659,15 +659,20 @@ footer a { color: #fff; text-decoration: none; margin: 0 8px; }
 }
 
 /* brown square behind */
-.hamburger::before{
-  content:"";
-  position:absolute;
-  inset:-5px;              /* controls square padding around lines */
-  background:#8c5a2b;
-  border-radius:6px;       /* optional — remove if you want sharp square */
-  z-index:-1;              /* send behind lines */
+  .hamburger::before {
+    content: "";
+    position: fixed;       /* fixed to viewport, not to hamburger */
+    top: 0;                /* align vertically with hamburger */
+    left: 0;
+    width: 100vw;          /* full viewport width */
+    height: 55px;          /* match the height of the hamburger + padding */
+    background: #8c5a2b;   /* brown rectangle */
+    z-index: -1;           /* behind the lines */
+  }
+/* Push navbar + header content down */
+body {
+  padding-top: 10px; /* same as rectangle height */
 }
-
 .hamburger span {
   position: absolute;
   left: 0;
