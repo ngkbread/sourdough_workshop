@@ -357,15 +357,17 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
   });
 });
 
-// Clear default value on focus, restore if left empty
+// For inputs: targetWeight, hydration, customFlour
 document.querySelectorAll('#targetWeight, #hydration, #customFlour').forEach(input => {
+  const defaultValue = input.value; // store initial default
+
   input.addEventListener('focus', () => {
-    input.value = ''; // clear whatever is currently in the field
+    input.value = ''; // clear on focus
   });
-});
+
   input.addEventListener('blur', () => {
-    if(input.value === '') input.value = defaultValue;
-    calculate(); // recalc if blurred
+    if (input.value === '') input.value = defaultValue; // restore default if left empty
+    calculate(); // recalc when leaving input
   });
 });
 </script>
