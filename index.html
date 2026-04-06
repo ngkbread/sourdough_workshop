@@ -644,21 +644,58 @@ footer a { color: #fff; text-decoration: none; margin: 0 8px; }
 
   /* Navbar Mobile */
   .navbar { flex-direction: column; gap: 12px; }
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-    cursor: pointer;
-    position: fixed;
-    top: 3px;
-    right: 15px;
-    z-index: 1101;
-  }
-  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(0, 8px); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(0, -8px); }
+/* Hamburger */
+.hamburger{
+  position: fixed;
+  top: 3px;
+  right: 15px;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1101;
+}
+
+/* brown square behind */
+.hamburger::before{
+  content:"";
+  position:absolute;
+  inset:-5px;              /* controls square padding around lines */
+  background:#8c5a2b;
+  border-radius:6px;       /* optional — remove if you want sharp square */
+  z-index:-1;              /* send behind lines */
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: 0.3s ease;
+  transform-origin: center;
+}
+
+/* exact bar positions */
+.hamburger span:nth-child(1){ top:0; }
+.hamburger span:nth-child(2){ top:8px; }
+.hamburger span:nth-child(3){ top:16px; }
+
+/* symmetric X */
+.hamburger.open span:nth-child(1){
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2){
+  opacity:0;
+}
+
+.hamburger.open span:nth-child(3){
+  transform: translateY(-8px) rotate(-45deg);
+}
 
   .navbar-links {
     position: fixed;

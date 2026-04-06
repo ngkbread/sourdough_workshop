@@ -141,12 +141,27 @@ footer { text-align: center; margin-top: 48px; font-size: 0.8rem; color: var(--t
 .navbar a:hover, .dropbtn:hover { background: rgba(255,255,255,0.2); }
 .dropdown { position: relative; display: inline-block; }
 .dropdown-content {
-  position: absolute; right: 0; background-color: #fff; min-width: 180px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; z-index: 1000;
-  opacity: 0; transform: translateY(-10px); pointer-events: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
-.dropdown.open .dropdown-content { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.dropdown.open .dropdown-content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
 .dropdown-content a { color: #2c2c2c; padding: 10px 15px; display: block; font-weight: 500; }
 .dropdown-content a:hover { background-color: #f0e6dc; }
 .triangle { display: inline-block; margin-right: 6px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid white; transition: transform 0.5s; }
@@ -163,8 +178,28 @@ footer { text-align: center; margin-top: 48px; font-size: 0.8rem; color: var(--t
 
 @media(max-width:600px){
   .navbar { flex-direction: column; align-items: flex-start; gap: 0; }
-  .navbar-links-mobile { display: none; flex-direction: column; width: 100%; margin-top: 12px; gap: 12px; }
-  .navbar-links-mobile.show { display: flex; }
+.navbar-links-mobile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0;
+  gap: 12px;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    margin-top 0.25s ease;
+}
+
+.navbar-links-mobile.show {
+  max-height: 500px;   /* big enough to contain links */
+  opacity: 1;
+  margin-top: 12px;
+}
   .hamburger { display: flex; }
 }
 </style>
