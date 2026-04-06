@@ -346,6 +346,28 @@ function calculate(){
   document.getElementById('resultsCard').classList.add('visible');
 }
 calculate();
+
+// Close keyboard when pressing Enter
+document.querySelectorAll('input[type="number"]').forEach(input => {
+  input.addEventListener('keydown', function(e){
+    if(e.key === "Enter"){
+      e.preventDefault();
+      input.blur(); // removes focus → closes keyboard on mobile
+    }
+  });
+});
+
+// Clear default value on focus, restore if left empty
+document.querySelectorAll('input[type="number"]').forEach(input => {
+  const defaultValue = input.value;
+  input.addEventListener('focus', () => {
+    if(input.value === defaultValue) input.value = '';
+  });
+  input.addEventListener('blur', () => {
+    if(input.value === '') input.value = defaultValue;
+    calculate(); // recalc if blurred
+  });
+});
 </script>
 
 </body>
