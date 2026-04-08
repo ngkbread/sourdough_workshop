@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אחוזי אופה</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream: #f5f0e8;
+  --warm-white: #faf8f3;
+  --tan: #d4b896;
+  --brown: #8b6542;
+  --dark-brown: #4a3018;
+  --crust: #c17f3b;
+  --mold-green: #5a7a4a;
+  --text: #2c1a0a;
+  --text-muted: #7a5c3a;
+  --border: #ddd0b8;
+  --highlight: #fff8e8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--cream);
+  font-family: 'Heebo', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+}
+
+.container { max-width: 700px; margin: 0 auto; }
+
+header { text-align: center; margin-bottom: 40px; }
+
+h1 {
+  font-size: 2.4rem;
+  color: var(--dark-brown);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.card {
+  background: var(--warm-white);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 24px rgba(74,48,24,0.08);
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 110px 1fr 40px;
+  gap: 10px;
+  align-items: center;
+}
+
+input[type="text"],
+input[type="number"] {
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Heebo';
+}
+
+button {
+  background: #8c5a2b;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Heebo', sans-serif; /* add this */
+}
+#add-btn {
+  background: var(--cream);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.add-btn {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.results {
+  margin-top: 30px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.percent {
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+}
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  background: #8c5a2b;
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.navbar a, .dropbtn {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+
+.navbar a:hover, .dropbtn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.dropdown { position: relative; display: inline-block; }
+
+.dropdown-content {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dropdown.open .dropdown-content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-content a {
+  color: #2c2c2c;
+  padding: 10px 15px;
+  display: block;
+  font-weight: 500;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0e6dc;
+}
+
+.triangle {
+  display: inline-block;
+  margin-right: 6px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid white;
+  transition: transform 0.5s;
+}
+
+.dropdown.open .triangle {
+  transform: rotate(180deg);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  margin-left: auto;
+}
+
+.hamburger div {
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.hamburger.active div:nth-child(1) {
+  transform: rotate(45deg) translate(5px,5px);
+}
+
+.hamburger.active div:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active div:nth-child(3) {
+  transform: rotate(-45deg) translate(5px,-5px);
+}
+
+.scale-box{
+margin-top:30px;
+padding-top:20px;
+border-top:4px solid var(--border);
+}
+
+.scale-box h3{
+margin-bottom:10px;
+}
+
+
+#scaledResults .percent .unit {
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+.row button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+@media(max-width:600px){
+
+.navbar {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.navbar-links-mobile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    margin-top 0.25s ease;
+}
+
+.navbar-links-mobile.show {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 12px;
+}
+
+.hamburger { display: flex; }
+
+/* mobile calculator */
+
+body{
+  padding: 20px 12px 40px;
+}
+
+.card{
+  padding: 18px;
+}
+
+h1{
+  font-size: 1.7rem;
+}
+
+.row {
+  grid-template-columns: 85px 1fr 36px;
+  gap: 6px;
+}
+
+.row input{
+  padding: 8px;
+  font-size: 14px;
+}
+
+.row button{
+  padding: 8px;
+}
+
+input[type="text"],
+input[type="number"]{
+  width: 100%;
+}
+
+}
+
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+
+.input-error {
+  color: #c0392b;
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+.input-error.fade {
+  opacity: 0;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+
+<nav class="navbar">
+  <div class="hamburger" onclick="toggleHamburger(this)">
+    <div></div><div></div><div></div>
+  </div>
+
+  <div class="navbar-links-mobile">
+
+    <a href="index.html">דף הבית</a>
+    <a href="index.html#about">אודות</a>
+
+    <div class="dropdown">
+      <a href="#" class="dropbtn" onclick="toggleDropdown(event, this)">
+        כלי עזר <span class="triangle"></span>
+      </a>
+
+      <div class="dropdown-content">
+        <a href="starter_calculator.html">מחשבון מחמצת</a>
+        <a href="bakers_percentage.html">מחשבון אחוזי אופה</a>
+      </div>
+    </div>
+
+    <a href="https://www.instagram.com/ngkbread" target="_blank">
+      גלריה
+    </a>
+
+    <a href="https://wa.me/972544635149" target="_blank">
+      צור קשר
+    </a>
+
+  </div>
+</nav>
+
+<h1>מחשבון אחוזי אופה</h1>
+<p class="subtitle">הקלידו מתכון וקבלו אותו באחוזי אופה</p>
+
+</header>
+
+<div class="card">
+
+<div class="ingredients" id="ingredients">
+
+<div class="row">
+<input type="text" placeholder="גרם" oninput="formatWithCommas(this)">
+<input type="text" placeholder="רכיב">
+<button onclick="removeRow(this)">×</button>
+</div>
+
+<div class="row">
+<input type="text" placeholder="גרם" oninput="formatWithCommas(this)">
+<input type="text" placeholder="רכיב">
+<button onclick="removeRow(this)">×</button>
+</div>
+
+</div>
+
+<button class="add-btn" id="add-btn" onclick="addRow()">+ הוסף רכיב</button>
+<button class="add-btn" onclick="calculate()">הצג מתכון באחוזי אופה</button>
+
+<div class="results" id="results"></div>
+<div class="scale-box">
+<h3>כמה גרם בצק להכין?</h3>
+
+<input
+  type="text"
+  id="targetWeight"
+  placeholder="לדוגמה: 1,000"
+  oninput="formatWithCommas(this)"
+>
+
+<button class="add-btn" onclick="scaleRecipe()">
+חשב מתכון (בגרם)
+</button>
+
+<div class="results" id="scaledResults"></div>
+</div>
+</div>
+</div>
+
+<script>
+
+function formatNumber(num) {
+  return num % 1 === 0 ? num.toFixed(0) : num.toFixed(1);
+}
+
+function formatWithCommas(input) {
+  let raw = input.value.replace(/,/g, '');
+  if (/[^\d.]/.test(raw)) {
+    showInputError(input, "יש להזין ספרות בלבד");
+  }
+  raw = raw.replace(/[^\d.]/g, '');
+  if (raw === '') {
+    input.value = '';
+    return;
+  }
+  // Don't reformat if user is still typing a decimal
+  if (raw.endsWith('.')) {
+    input.value = raw;
+    return;
+  }
+  const num = parseFloat(raw);
+  if (isNaN(num)) {
+    input.value = '';
+    return;
+  }
+  // Preserve decimal digits as typed
+  const parts = raw.split('.');
+  const intPart = Number(parts[0]).toLocaleString('en-US');
+  input.value = parts.length > 1 ? intPart + '.' + parts[1] : intPart;
+}
+
+function showInputError(input, message) {
+  // remove existing error if any
+  const existing = input.parentElement.querySelector('.input-error');
+  if (existing) existing.remove();
+
+  const err = document.createElement('div');
+  err.className = 'input-error';
+  err.textContent = message;
+  input.parentElement.appendChild(err);
+
+  // fade out after 2 seconds
+  setTimeout(() => err.classList.add('fade'), 2000);
+  setTimeout(() => err.remove(), 2500);
+}
+
+function addRow(){
+  const div = document.createElement("div");
+  div.className = "row";
+  div.innerHTML = `
+    <input type="text" placeholder="גרם" oninput="formatWithCommas(this)">
+    <input type="text" placeholder="רכיב">
+    <button onclick="removeRow(this)">×</button>
+  `;
+  document.getElementById("ingredients").appendChild(div);
+
+  // Clear both result windows immediately
+  document.getElementById("scaledResults").innerHTML = "";
+  document.getElementById("results").innerHTML = "";
+}
+
+function removeRow(btn){
+  btn.parentElement.remove();
+
+  // Clear results whenever a row is removed
+  document.getElementById("scaledResults").innerHTML = "";
+}
+
+
+const FLOUR_KEYWORDS = [
+  "קמח",
+  "חיטה",
+  "כוסמין",
+  "שיפון",
+  "דורום",
+  "semolina",
+  "flour",
+  "wheat",
+  "rye",
+  "spelt",
+  "לבן"
+];
+
+function normalizeText(text){
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, ' ')   // collapse spaces
+    .trim();
+}
+
+
+function calculate(){
+
+const rows = document.querySelectorAll(".row")
+
+let totalFlour = 0
+let data = []
+
+rows.forEach(row=>{
+
+const grams = parseFloat(row.children[0].value.replace(/,/g, ''))
+const name = row.children[1].value.trim()
+if(!name || !grams) return
+
+const cleanName = normalizeText(name);
+
+// 👇 HARD override — anything with מחמצת is NOT flour
+if (cleanName.includes("מחמצת") || cleanName.includes("starter") || cleanName.includes("לתת") || cleanName.includes("תמצית")) {
+  isFlour = false;
+} else {
+  isFlour = FLOUR_KEYWORDS.some(keyword =>
+    cleanName.includes(keyword)
+  );
+}
+if(isFlour) totalFlour += grams
+
+data.push({
+name,
+grams,
+isFlour
+})
+
+})
+
+if(totalFlour === 0){
+alert("לא נמצא קמח")
+return
+}
+
+let html = "";
+let totalPercent = 0; // accumulator
+
+data.forEach(item => {
+  let percent = (item.grams / totalFlour) * 100;
+  totalPercent += percent; // accumulate
+
+html += `
+  <div class="result-row">
+    <div>${item.name}</div>
+    <div class="percent">${formatNumber(percent)}%</div>
+  </div>
+`;
+
+});
+
+// Add one total row AFTER the loop
+html += `
+<div class="result-row" style="font-weight: 700; border-top: 1px solid var(--border); padding-top: 8px; border-bottom: none !important;">
+  <div>סה"כ</div>
+<div class="percent">${formatNumber(totalPercent)}%</div>
+</div>
+`;
+
+document.getElementById("results").innerHTML = html;
+
+}
+
+
+function scaleRecipe() {
+  const target = parseFloat(document.getElementById("targetWeight").value.replace(/,/g, ''));
+  if (!target) return;
+
+  const rows = document.querySelectorAll(".row");
+  let totalFlour = 0;
+  let data = [];
+
+  // Collect all data
+  rows.forEach(row => {
+    const grams = parseFloat(row.children[0].value.replace(/,/g, ''));
+    const name = row.children[1].value.trim();
+    if (!name || !grams) return;
+
+    const cleanName = normalizeText(name);
+    let isFlour = !(cleanName.includes("מחמצת") || cleanName.includes("starter")) &&
+                  FLOUR_KEYWORDS.some(keyword => cleanName.includes(keyword));
+
+    if (isFlour) totalFlour += grams;
+
+    data.push({ name, grams, isFlour });
+  });
+
+  if (totalFlour === 0) return;
+
+  // Calculate flour needed
+  const totalPercent = data.reduce((sum, item) => sum + (item.grams / totalFlour) * 100, 0);
+  const flourNeeded = target / (totalPercent / 100);
+
+  let html = "";
+  let totalGrams = 0;
+
+  data.forEach(item => {
+    const percent = (item.grams / totalFlour) * 100;
+    let grams = flourNeeded * (percent / 100);
+    totalGrams += grams;
+
+    // Show 1 decimal only for grams < 30
+    const displayGrams = grams < 30 ? grams.toFixed(1) : Math.round(grams);
+
+    html += `
+      <div class="result-row">
+        <div>${item.name}</div>
+        <div class="percent">${displayGrams.toLocaleString()} <span class="unit">גרם</span></div>
+      </div>
+    `;
+  });
+
+  // Total row
+  const totalDisplay = totalGrams < 30 ? totalGrams.toFixed(1) : Math.round(totalGrams);
+  html += `
+    <div class="result-row total-row" style="font-weight:700; padding-top:8px; border-top:1px solid var(--border); border-bottom:none;">
+      <div>סה"כ</div>
+      <div class="percent">${totalDisplay.toLocaleString()} <span class="unit">גרם</span></div>
+    </div>
+  `;
+
+  document.getElementById("scaledResults").innerHTML = html;
+}
+
+function toggleHamburger(el){
+  el.classList.toggle("active");
+  document
+    .querySelector(".navbar-links-mobile")
+    .classList.toggle("show");
+}
+
+function toggleDropdown(e, el){
+  e.preventDefault();
+  el.parentElement.classList.toggle("open");
+}
+
+// clear placeholder on focus + clear grams field for retyping
+document.addEventListener("focusin", function(e){
+  if(e.target.tagName === "INPUT"){
+    e.target.dataset.placeholder = e.target.placeholder;
+    e.target.placeholder = "";
+    // only auto-clear the grams input (has commas or is a number)
+    if(e.target.oninput && e.target.getAttribute("oninput").includes("formatWithCommas")){
+      e.target.value = "";
+    }
+  }
+});
+
+// restore placeholder if empty
+document.addEventListener("focusout", function(e){
+  if(e.target.tagName === "INPUT"){
+    if(e.target.value.trim() === ""){
+      e.target.placeholder = e.target.dataset.placeholder || "";
+    }
+  }
+});
+
+// Enter / Back closes keyboard
+document.addEventListener("keydown", function(e){
+  const active = document.activeElement;
+
+  if(!active || active.tagName !== "INPUT") return;
+
+  if(e.key === "Enter"){
+    active.blur();
+  }
+
+  if(e.key === "Backspace" && active.value === ""){
+    active.blur();
+  }
+});
+
+// Whenever user types in any ingredient input, clear both result windows
+document.getElementById("ingredients").addEventListener("input", () => {
+  document.getElementById("scaledResults").innerHTML = "";
+  document.getElementById("results").innerHTML = "";
+});
+
+
+
+</script>
+
+</body>
+</html>
