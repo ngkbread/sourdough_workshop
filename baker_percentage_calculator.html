@@ -699,13 +699,21 @@ function toggleDropdown(e, el){
 }
 
 // clear placeholder on focus + clear grams field for retyping
+// clear placeholder on focus + clear grams field for retyping
 document.addEventListener("focusin", function(e){
   if(e.target.tagName === "INPUT"){
     e.target.dataset.placeholder = e.target.placeholder;
     e.target.placeholder = "";
-    // only auto-clear the grams input (has commas or is a number)
+
+    // auto-clear any input with formatWithCommas (ingredient grams)
     if(e.target.oninput && e.target.getAttribute("oninput").includes("formatWithCommas")){
       e.target.value = "";
+    }
+
+    // auto-clear target weight input immediately
+    if(e.target.id === "targetWeight"){
+      e.target.value = "";
+      document.getElementById("scaledResults").innerHTML = ""; // clear scaled results
     }
   }
 });
