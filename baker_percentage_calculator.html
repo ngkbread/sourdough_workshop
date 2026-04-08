@@ -26,6 +26,9 @@
 
 body {
   background-color: var(--cream);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(197,143,80,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(90,122,74,0.08) 0%, transparent 50%);
   font-family: 'Heebo', sans-serif;
   color: var(--text);
   min-height: 100vh;
@@ -37,9 +40,13 @@ body {
 header { text-align: center; margin-bottom: 40px; }
 
 h1 {
-  font-size: 2.4rem;
+  font-family: 'Heebo', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
   color: var(--dark-brown);
-  font-weight: 800;
+  line-height: 1.15;
+  font-weight: 1100;
+  font-stretch: expanded;
+  letter-spacing: 0.5px;
 }
 
 .subtitle {
@@ -249,6 +256,14 @@ margin-bottom:10px;
   font-size: 1.2rem;
   flex-shrink: 0;
 }
+
+footer {
+  text-align: center;
+  margin-top: 48px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
 @media(max-width:600px){
 
 .navbar {
@@ -378,7 +393,7 @@ input[type=number] {
 </nav>
 
 <h1>מחשבון אחוזי אופה</h1>
-<p class="subtitle">הקלידו מתכון וקבלו אותו באחוזי אופה</p>
+<p class="subtitle">הקלידו מתכון - וקבלו אותו באחוזי אופה</p>
 
 </header>
 
@@ -421,6 +436,13 @@ input[type=number] {
 <div class="results" id="scaledResults"></div>
 </div>
 </div>
+
+
+<footer>
+מתכון טוב רשום בגרם!
+</footer>
+
+
 </div>
 
 <script>
