@@ -436,12 +436,9 @@ input[type=number] {
   inputmode="decimal"
   pattern="[0-9.,]*"
   placeholder="לדוגמה: 1,000"
-  oninput="formatWithCommas(this); scaleRecipe();"
->
+/>
 
-<button class="add-btn" onclick="scaleRecipe()">
-חשב מתכון (בגרם)
-</button>
+
 
 <div class="results" id="scaledResults"></div>
 </div>
@@ -733,7 +730,12 @@ document.getElementById("ingredients").addEventListener("input", () => {
   document.getElementById("results").innerHTML = "";
 });
 
+const targetInput = document.getElementById("targetWeight");
 
+targetInput.addEventListener("input", () => {
+  formatWithCommas(targetInput); // format number with commas
+  scaleRecipe();                 // recalc recipe live
+});
 
 </script>
 
