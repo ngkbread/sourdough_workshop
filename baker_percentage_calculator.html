@@ -436,7 +436,7 @@ input[type=number] {
   inputmode="decimal"
   pattern="[0-9.,]*"
   placeholder="לדוגמה: 1,000"
-  oninput="formatWithCommas(this)"
+  oninput="formatWithCommas(this); scaleRecipe();"
 >
 
 <button class="add-btn" onclick="scaleRecipe()">
