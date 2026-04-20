@@ -84,6 +84,21 @@ h1 {
   align-items: center;
 }
 
+.name-wrap{
+display:flex;
+gap:6px;
+}
+
+.name-wrap input{
+flex:1;
+}
+
+.hydration{
+width:70px;
+display:none;
+}
+
+
 input[type="text"],
 input[type="number"] {
   background: var(--cream);
@@ -415,7 +430,13 @@ input[type=number] {
   pattern="[0-9.,]*"
   placeholder="גרם"
   oninput="formatWithCommas(this)"
-><input type="text" placeholder="רכיב">
+>
+
+<div class="name-wrap">
+<input type="text" placeholder="רכיב" oninput="togglePrefermentHydration(this)">
+<input type="number" class="hydration" placeholder="הידרציה %" min="1" max="200">
+</div>
+
 <button onclick="removeRow(this)">×</button>
 </div>
 
@@ -426,10 +447,15 @@ input[type=number] {
   pattern="[0-9.,]*"
   placeholder="גרם"
   oninput="formatWithCommas(this)"
-><input type="text" placeholder="רכיב">
-<button onclick="removeRow(this)">×</button>
+>
+
+<div class="name-wrap">
+<input type="text" placeholder="רכיב" oninput="togglePrefermentHydration(this)">
+<input type="number" class="hydration" placeholder="הידרציה %" min="1" max="200">
 </div>
 
+<button onclick="removeRow(this)">×</button>
+</div>
 </div>
 
 <button class="add-btn" id="add-btn" onclick="addRow()">+ הוסף רכיב</button>
@@ -477,7 +503,6 @@ function formatWithCommas(input) {
     input.value = '';
     return;
   }
-  // Don't reformat if user is still typing a decimal
   if (raw.endsWith('.')) {
     input.value = raw;
     return;
@@ -487,14 +512,12 @@ function formatWithCommas(input) {
     input.value = '';
     return;
   }
-  // Preserve decimal digits as typed
   const parts = raw.split('.');
   const intPart = Number(parts[0]).toLocaleString('en-US');
   input.value = parts.length > 1 ? intPart + '.' + parts[1] : intPart;
 }
 
 function showInputError(input, message) {
-  // remove existing error if any
   const existing = input.parentElement.querySelector('.input-error');
   if (existing) existing.remove();
 
@@ -503,102 +526,123 @@ function showInputError(input, message) {
   err.textContent = message;
   input.parentElement.appendChild(err);
 
-  // fade out after 2 seconds
   setTimeout(() => err.classList.add('fade'), 2000);
   setTimeout(() => err.remove(), 2500);
 }
 
+const PREFERMENT_KEYWORDS = [
+"מחמצת","פוליש","ביגה","שאור","starter","poolish","biga","levain","preferment",
+];
+
+function togglePrefermentHydration(input){
+
+const row = input.closest(".row")
+const hydration = row.querySelector(".hydration")
+
+const name = normalizeText(input.value)
+
+const isPref = PREFERMENT_KEYWORDS.some(k=>name.includes(k))
+
+if(isPref){
+hydration.style.display="block"
+if(!hydration.value){
+  hydration.placeholder = "% הידרציה"
+}
+}else{
+hydration.style.display="none"
+hydration.value=""
+}
+
+}
 function addRow(){
   const div = document.createElement("div");
   div.className = "row";
   div.innerHTML = `
 <input
-  type="text"
-  inputmode="decimal"
-  pattern="[0-9.,]*"
-  placeholder="גרם"
-  oninput="formatWithCommas(this)"
->    <input type="text" placeholder="רכיב">
-    <button onclick="removeRow(this)">×</button>
+type="text"
+inputmode="decimal"
+pattern="[0-9.,]*"
+placeholder="גרם"
+oninput="formatWithCommas(this)"
+>
+
+<div class="name-wrap">
+<input type="text" placeholder="רכיב" oninput="togglePrefermentHydration(this)">
+<input type="number" class="hydration" placeholder="הידרציה %" min="1" max="200">
+</div>
+
+<button onclick="removeRow(this)">×</button>
   `;
   document.getElementById("ingredients").appendChild(div);
 
-  // Clear both result windows immediately
   document.getElementById("scaledResults").innerHTML = "";
   document.getElementById("results").innerHTML = "";
 }
-
 function removeRow(btn){
   btn.parentElement.remove();
-
-  // Clear results whenever a row is removed
   document.getElementById("scaledResults").innerHTML = "";
 }
 
-
 const FLOUR_KEYWORDS = [
-  "קמח",
-  "חיטה",
-  "כוסמין",
-  "שיפון",
-  "דורום",
-  "לבן",
-  "סמולינה",
-  "סמולה",
-  "איינקורן",
-  "חוראסאן",
-  "אמר",
-  "מניטובה",
-  "semolina",
-  "semola",
-  "einkorn",
-  "emmer",
-  "khorasan",
-  "whole wheat",
-  "flour",
-  "wheat",
-  "rye",
-  "spelt",
-  "manitoba",
+"קמח","חיטה","כוסמין","שיפון","דורום","לבן",
+"סמולינה","סמולה","איינקורן","חוראסאן","אמר",
+"מניטובה","semolina","semola","einkorn","emmer",
+"khorasan","whole wheat","flour","wheat","rye",
+"spelt","manitoba"
 ];
 
 function normalizeText(text){
-  return text
-    .toLowerCase()
-    .replace(/\s+/g, ' ')   // collapse spaces
-    .trim();
+  return text.toLowerCase().replace(/\s+/g,' ').trim();
 }
-
 
 function calculate(){
 
 const rows = document.querySelectorAll(".row")
 
 let totalFlour = 0
+let totalWater = 0
 let data = []
 
 rows.forEach(row=>{
 
-const grams = parseFloat(row.children[0].value.replace(/,/g, ''))
-const name = row.children[1].value.trim()
+const grams = parseFloat(row.querySelector('input[type="text"]').value.replace(/,/g,''))
+const name = row.querySelector(".name-wrap input").value.trim()
+const hydrationInput = row.querySelector(".hydration")
+
 if(!name || !grams) return
 
-const cleanName = normalizeText(name);
+const clean = normalizeText(name)
 
-// 👇 HARD override — anything with מחמצת is NOT flour
-if (cleanName.includes("מחמצת") || cleanName.includes("starter") || cleanName.includes("לתת") || cleanName.includes("תמצית")) {
-  isFlour = false;
-} else {
-  isFlour = FLOUR_KEYWORDS.some(keyword =>
-    cleanName.includes(keyword)
-  );
-}
+let isFlour = FLOUR_KEYWORDS.some(k=>clean.includes(k))
+let prefermentFlour = 0
+let prefermentWater = 0
+
+if(hydrationInput && hydrationInput.style.display !== "none"){
+
+let hydration = parseFloat(hydrationInput.value)
+if(!hydration) hydration = 100
+
+prefermentWater = grams * (hydration/(100+hydration))
+prefermentFlour = grams - prefermentWater
+
+totalFlour += prefermentFlour
+totalWater += prefermentWater
+
+}else{
+
 if(isFlour) totalFlour += grams
+
+if(clean.includes("מים") || clean.includes("water")){
+totalWater += grams
+}
+
+}
 
 data.push({
 name,
 grams,
-isFlour
+prefermentFlour,
+prefermentWater
 })
 
 })
@@ -608,165 +652,193 @@ alert("לא נמצא קמח")
 return
 }
 
-let html = "";
-let totalPercent = 0; // accumulator
+let html=""
+let totalPercent=0
 
-data.forEach(item => {
-  let percent = (item.grams / totalFlour) * 100;
-  totalPercent += percent; // accumulate
+data.forEach(item=>{
+
+let g = item.grams
+
+if(item.prefermentFlour){
+g = item.prefermentFlour + item.prefermentWater
+}
+
+let percent = (g/totalFlour)*100
+totalPercent += percent
 
 html += `
-  <div class="result-row">
-    <div>${item.name}</div>
-    <div class="percent">${formatNumber(percent)}%</div>
-  </div>
-`;
+<div class="result-row">
+<div>${item.name}</div>
+<div class="percent">${formatNumber(percent)}%</div>
+</div>
+`
 
-});
+})
 
-// Add one total row AFTER the loop
 html += `
-<div class="result-row" style="font-weight: 700; border-top: 1px solid var(--border); padding-top: 8px; border-bottom: none !important;">
-  <div>סה"כ</div>
+<div class="result-row" style="font-weight:700;border-top:1px solid var(--border);padding-top:8px;border-bottom:none;">
+<div>סה"כ</div>
 <div class="percent">${formatNumber(totalPercent)}%</div>
 </div>
-`;
+`
 
-document.getElementById("results").innerHTML = html;
+const hydration = (totalWater/totalFlour)*100
+
+html += `
+<div class="result-row" style="font-weight:700;border-bottom:none;">
+<div>הידרציה</div>
+<div class="percent">${formatNumber(hydration)}%</div>
+</div>
+`
+
+document.getElementById("results").innerHTML = html
 
 }
 
+function scaleRecipe(){
 
-function scaleRecipe() {
-  const target = parseFloat(document.getElementById("targetWeight").value.replace(/,/g, ''));
-  if (!target) return;
+const target=parseFloat(document.getElementById("targetWeight").value.replace(/,/g,''))
+if(!target) return
 
-  const rows = document.querySelectorAll(".row");
-  let totalFlour = 0;
-  let data = [];
+const rows=document.querySelectorAll(".row")
 
-  // Collect all data
-  rows.forEach(row => {
-    const grams = parseFloat(row.children[0].value.replace(/,/g, ''));
-    const name = row.children[1].value.trim();
-    if (!name || !grams) return;
+let totalFlour=0
+let data=[]
 
-    const cleanName = normalizeText(name);
-    let isFlour = !(cleanName.includes("מחמצת") || cleanName.includes("starter")) &&
-                  FLOUR_KEYWORDS.some(keyword => cleanName.includes(keyword));
+rows.forEach(row=>{
 
-    if (isFlour) totalFlour += grams;
+const grams=parseFloat(row.querySelector('input[type="text"]').value.replace(/,/g,''))
+const name = row.querySelector(".name-wrap input").value.trim()
+const hydrationInput=row.querySelector(".hydration")
 
-    data.push({ name, grams, isFlour });
-  });
+if(!name||!grams) return
 
-  if (totalFlour === 0) return;
+const clean=normalizeText(name)
 
-  // Calculate flour needed
-  const totalPercent = data.reduce((sum, item) => sum + (item.grams / totalFlour) * 100, 0);
-  const flourNeeded = target / (totalPercent / 100);
+let isFlour=FLOUR_KEYWORDS.some(k=>clean.includes(k))
+let prefermentFlour=0
+let prefermentWater=0
 
-  let html = "";
-  let totalGrams = 0;
+if(hydrationInput && hydrationInput.style.display!=="none"){
 
-  data.forEach(item => {
-    const percent = (item.grams / totalFlour) * 100;
-    let grams = flourNeeded * (percent / 100);
-    totalGrams += grams;
+let hydration=parseFloat(hydrationInput.value)
+if(!hydration) hydration=100
 
-    // Show 1 decimal only for grams < 30
-    const displayGrams = grams < 30 ? grams.toFixed(1) : Math.round(grams);
+prefermentWater=grams*(hydration/(100+hydration))
+prefermentFlour=grams-prefermentWater
 
-    html += `
-      <div class="result-row">
-        <div>${item.name}</div>
-        <div class="percent">${displayGrams.toLocaleString()} <span class="unit">גרם</span></div>
-      </div>
-    `;
-  });
+totalFlour+=prefermentFlour
 
-  // Total row
-  const totalDisplay = totalGrams < 30 ? totalGrams.toFixed(1) : Math.round(totalGrams);
-  html += `
-    <div class="result-row total-row" style="font-weight:700; padding-top:8px; border-top:1px solid var(--border); border-bottom:none;">
-      <div>סה"כ</div>
-      <div class="percent">${totalDisplay.toLocaleString()} <span class="unit">גרם</span></div>
-    </div>
-  `;
+}else{
+if(isFlour) totalFlour+=grams
+}
 
-  document.getElementById("scaledResults").innerHTML = html;
+data.push({name,grams,prefermentFlour,prefermentWater})
+
+})
+
+if(totalFlour===0) return
+
+const totalPercent=data.reduce((sum,item)=>{
+let g=item.grams
+if(item.prefermentFlour) g=item.prefermentFlour+item.prefermentWater
+return sum+(g/totalFlour)*100
+},0)
+
+const flourNeeded=target/(totalPercent/100)
+
+let html=""
+let totalGrams=0
+
+data.forEach(item=>{
+
+let g=item.grams
+if(item.prefermentFlour) g=item.prefermentFlour+item.prefermentWater
+
+const percent=(g/totalFlour)*100
+
+let grams=flourNeeded*(percent/100)
+totalGrams+=grams
+
+const display=grams<30?grams.toFixed(1):Math.round(grams)
+
+html+=`
+<div class="result-row">
+<div>${item.name}</div>
+<div class="percent">${Number(display).toLocaleString()} <span class="unit">גרם</span></div>
+</div>
+`
+})
+
+const totalDisplay=totalGrams<30?totalGrams.toFixed(1):Math.round(totalGrams)
+
+html+=`
+<div class="result-row total-row" style="font-weight:700;padding-top:8px;border-top:1px solid var(--border);border-bottom:none;">
+<div>סה"כ</div>
+<div class="percent">${Number(totalDisplay).toLocaleString()} <span class="unit">גרם</span></div>
+</div>
+`
+
+document.getElementById("scaledResults").innerHTML=html
+
 }
 
 function toggleHamburger(el){
-  el.classList.toggle("active");
-  document
-    .querySelector(".navbar-links-mobile")
-    .classList.toggle("show");
+el.classList.toggle("active");
+document.querySelector(".navbar-links-mobile").classList.toggle("show");
 }
 
-function toggleDropdown(e, el){
-  e.preventDefault();
-  el.parentElement.classList.toggle("open");
+function toggleDropdown(e,el){
+e.preventDefault();
+el.parentElement.classList.toggle("open");
 }
 
-// clear placeholder on focus + clear grams field for retyping
-// clear placeholder on focus + clear grams field for retyping
-document.addEventListener("focusin", function(e){
-  if(e.target.tagName === "INPUT"){
-    e.target.dataset.placeholder = e.target.placeholder;
-    e.target.placeholder = "";
+document.addEventListener("focusin",function(e){
+if(e.target.tagName==="INPUT"){
+e.target.dataset.placeholder=e.target.placeholder;
+e.target.placeholder="";
 
-    // auto-clear any input with formatWithCommas (ingredient grams)
-    if(e.target.oninput && e.target.getAttribute("oninput").includes("formatWithCommas")){
-      e.target.value = "";
-    }
+if(e.target.oninput && e.target.getAttribute("oninput").includes("formatWithCommas")){
+e.target.value="";
+}
 
-    // auto-clear target weight input immediately
-    if(e.target.id === "targetWeight"){
-      e.target.value = "";
-      document.getElementById("scaledResults").innerHTML = ""; // clear scaled results
-    }
-  }
+if(e.target.id==="targetWeight"){
+e.target.value="";
+document.getElementById("scaledResults").innerHTML="";
+}
+}
 });
 
-// restore placeholder if empty
-document.addEventListener("focusout", function(e){
-  if(e.target.tagName === "INPUT"){
-    if(e.target.value.trim() === ""){
-      e.target.placeholder = e.target.dataset.placeholder || "";
-    }
-  }
+document.addEventListener("focusout",function(e){
+if(e.target.tagName==="INPUT"){
+if(e.target.value.trim()===""){
+e.target.placeholder=e.target.dataset.placeholder||"";
+}
+}
 });
 
-// Enter / Back closes keyboard
-document.addEventListener("keydown", function(e){
-  const active = document.activeElement;
+document.addEventListener("keydown",function(e){
+const active=document.activeElement;
 
-  if(!active || active.tagName !== "INPUT") return;
+if(!active||active.tagName!=="INPUT") return;
 
-  if(e.key === "Enter"){
-    active.blur();
-  }
+if(e.key==="Enter") active.blur();
 
-  if(e.key === "Backspace" && active.value === ""){
-    active.blur();
-  }
+if(e.key==="Backspace"&&active.value==="") active.blur();
 });
 
-// Whenever user types in any ingredient input, clear both result windows
-document.getElementById("ingredients").addEventListener("input", () => {
-  document.getElementById("scaledResults").innerHTML = "";
-  document.getElementById("results").innerHTML = "";
+document.getElementById("ingredients").addEventListener("input",()=>{
+document.getElementById("scaledResults").innerHTML="";
+document.getElementById("results").innerHTML="";
 });
 
-const targetInput = document.getElementById("targetWeight");
+const targetInput=document.getElementById("targetWeight");
 
-targetInput.addEventListener("input", () => {
-  formatWithCommas(targetInput); // format number with commas
-  scaleRecipe();                 // recalc recipe live
+targetInput.addEventListener("input",()=>{
+formatWithCommas(targetInput);
+scaleRecipe();
 });
 
 </script>
-
 </body>
 </html>
